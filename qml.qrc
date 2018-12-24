@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>ElementQML/SidePanel.qml</file>
+        <file>ElementQML/PageCreationAction.qml</file>
     </qresource>
 </RCC>
