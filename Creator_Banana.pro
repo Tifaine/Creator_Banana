@@ -41,3 +41,7 @@ HEADERS += \
     libXML/tinyxml.h \
     GestionAction/action.h \
     GestionAction/gestiontypeaction.h
+
+DISTFILES += \
+    ElementQML/gestionComportement/mainPage.qml \
+    ElementQML/gestionComportement/SidePanelAction.qml

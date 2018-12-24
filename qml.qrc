@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>ElementQML/SidePanel.qml</file>
         <file>ElementQML/PageCreationAction.qml</file>
+        <file>ElementGestionComportement/MainPageComportement.qml</file>
+        <file>ElementGestionComportement/SidePanelComportement.qml</file>
     </qresource>
 </RCC>

@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("gestAction", &gestAction);
+    engine.rootContext()->setContextProperty("gestTypeAction", &gestTypeAction);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

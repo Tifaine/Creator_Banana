@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
 import "ElementQML"
+import "ElementGestionComportement"
 
 Window {
     id: window
@@ -28,22 +29,36 @@ Window {
                 switch(nb)
                 {
                 case 1:
+                {
                     pageCreationAction.visible = false
+                    mainPageComportement.visible = true
                     break
+                }
                 case 2:
+                {
                     pageCreationAction.visible = true
+                    mainPageComportement.visible = false
                     break
+                }
                 case 3:
+                {
                     pageCreationAction.visible = false
+                    mainPageComportement.visible = false
                     break
+                }
                 case 4:
+                {
                     pageCreationAction.visible = false
+                    mainPageComportement.visible = false
                     break
+                }
                 default:
                     break
                 }
             }
         }
+
+
 
         PageCreationAction {
             id: pageCreationAction
@@ -58,8 +73,23 @@ Window {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
         }
+
+        MainPageComportement {
+            id: mainPageComportement
+            visible:true
+            anchors.left: sidePanel.right
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
+        }
     }
 }
+
+
 
 
 

@@ -23,7 +23,7 @@ void GestionTypeAction::update()
         }else
         {
             TiXmlElement* root = doc.FirstChildElement();
-            //root = root->NextSiblingElement();
+
             for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement())
             {
                 std::string elemName = elem->Value();
@@ -52,4 +52,13 @@ void GestionTypeAction::update()
             }
         }
     }
+}
+
+int GestionTypeAction::getNbAction()
+{
+    return listAction.size();
+}
+QString GestionTypeAction::getNomAction(int indice)
+{
+    return listAction.at(indice)->getNomAction();
 }

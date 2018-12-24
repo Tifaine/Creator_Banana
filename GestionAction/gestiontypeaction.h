@@ -21,6 +21,8 @@ signals:
 
 public slots:
     void update();
+    int getNbAction();
+    QString getNomAction(int indice);
 
 private:
     QList<Action*> listAction;
