@@ -3,6 +3,7 @@
 #include <QQmlContext>
 
 #include "GestionAction/gestioncreationaction.h"
+#include "GestionAction/gestiontypeaction.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     GestionCreationAction gestAction;
+    GestionTypeAction gestTypeAction;
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("gestAction", &gestAction);

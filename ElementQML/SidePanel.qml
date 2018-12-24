@@ -67,6 +67,7 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     font.pixelSize: 12
+                    color:indiceAffiche==1?"white":"black"
                 }
 
 
@@ -107,6 +108,7 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     font.pixelSize: 12
+                    color:indiceAffiche==2?"white":"black"
                 }
 
                 Rectangle {
@@ -161,6 +163,7 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     font.pixelSize: 12
+                    color:indiceAffiche==3?"white":"black"
                 }
             }
         }

@@ -6,6 +6,8 @@ Item {
     width: 1400
     height: 800
 
+    Component.onCompleted: listParam.clear()
+
     Text {
         id: elementTitre
         text: qsTr("Création d'action")

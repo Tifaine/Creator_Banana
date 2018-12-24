@@ -26,23 +26,13 @@ void GestionCreationAction::saveAction()
     root->LinkEndChild( msg );
     for(int i=0;i<listParam.size();i++)
     {
-        msg = new TiXmlElement( "ListParam" );
+        msg = new TiXmlElement( "Param" );
         root->LinkEndChild( msg );
         msg->SetAttribute("name",listParam.at(i).nomParam.toStdString().c_str());
         msg->SetAttribute("valueDefault",listParam.at(i).valueDefault.toStdString().c_str());
-
     }
-
 
     doc.SaveFile( nomFile.toStdString().c_str() );
-
-
-    qDebug()<<"Coucou";
-    qDebug()<<nomAction<<" "<<isActionBlocante;
-    for(int i=0;i<listParam.size();i++)
-    {
-        qDebug()<<listParam.at(i).nomParam<<" "<<listParam.at(i).valueDefault;
-    }
 
     listParam.clear();
 }

@@ -18,7 +18,9 @@ SOURCES += \
     libXML/tinystr.cpp \
     libXML/tinyxml.cpp \
     libXML/tinyxmlerror.cpp \
-    libXML/tinyxmlparser.cpp
+    libXML/tinyxmlparser.cpp \
+    GestionAction/action.cpp \
+    GestionAction/gestiontypeaction.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,4 +38,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     GestionAction/gestioncreationaction.h \
     libXML/tinystr.h \
-    libXML/tinyxml.h
+    libXML/tinyxml.h \
+    GestionAction/action.h \
+    GestionAction/gestiontypeaction.h
