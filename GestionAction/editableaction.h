@@ -2,6 +2,13 @@
 #define EDITABLEACTION_H
 
 #include <QQuickItem>
+#include <QList>
+
+typedef struct parametreEditable
+{
+    QString nomParam;
+    QString valueParam;
+}parametreEditable;
 
 class EditableAction : public QQuickItem
 {
@@ -20,10 +27,13 @@ signals:
 public slots:
     int getXBloc() const;
     int getYBloc() const;
+    void modifierValue(QString nomParam, QString nouvelleValue);
+    void ajoutParametre(QString nomParam, QString value);
 
 private:
     int xBloc;
     int yBloc;
+    QList<parametreEditable*> listParam;
 };
 
 #endif // EDITABLEACTION_H

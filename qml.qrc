@@ -8,5 +8,6 @@
         <file>ElementGestionComportement/SidePanelComportement.qml</file>
         <file>ElementGestionComportement/OngletSequence.qml</file>
         <file>ElementQML/BlocSortie.qml</file>
+        <file>ElementQML/BlocEntree.qml</file>
     </qresource>
 </RCC>

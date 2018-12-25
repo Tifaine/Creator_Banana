@@ -104,9 +104,11 @@ Item {
                             {
 
                                 obj = repeaterBloc.itemAt(indice)
-                                if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "entree")
+                                obj2 = obj.childAt(mouse.x-obj.x,mouse.y-obj.y)
+                                if(obj2.objectName === "Entree")
                                 {
-                                    sortieCourante.valideSortie(obj)
+                                    sortieCourante.valideSortie(obj2)
+                                    obj2.addPere(sortieCourante)
                                 }else
                                 {
                                     sortieCourante.repaint(5,5);

@@ -22,7 +22,8 @@ SOURCES += \
     GestionAction/action.cpp \
     GestionAction/gestiontypeaction.cpp \
     GestionAction/editableaction.cpp \
-    ElementQML/connector.cpp
+    ElementQML/connector.cpp \
+    GestionAction/gestionsequence.cpp
 
 RESOURCES += qml.qrc
 
@@ -44,7 +45,8 @@ HEADERS += \
     GestionAction/action.h \
     GestionAction/gestiontypeaction.h \
     GestionAction/editableaction.h \
-    ElementQML/connector.h
+    ElementQML/connector.h \
+    GestionAction/gestionsequence.h
 
 DISTFILES += \
     ElementQML/gestionComportement/mainPage.qml \

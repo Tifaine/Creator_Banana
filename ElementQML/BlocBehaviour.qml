@@ -10,17 +10,41 @@ Item {
     property bool isBlocant:false
     property string name:"Action"
     width:200
+    property int oldX: 0
+    property int oldY: 0
     height:30+listParam.count*35
+    onXChanged:
+    {
+        //changeX(x-oldX)
+        rectangleSortie.pereBouge(x-oldX,0)
+        rectangleTimeout.pereBouge(x-oldX,0)
+        rectangleEntree.moveYourDaddy(x-oldX,0)
+        oldX = x
+    }
+    onYChanged:
+    {
+        //changeY(y-oldY)
+        rectangleSortie.pereBouge(0,y-oldY)
+        rectangleTimeout.pereBouge(0,y-oldY)
+        rectangleEntree.moveYourDaddy(0,y-oldY)
+        oldY=y
+    }
 
-    Component.onCompleted: listParam.clear()
-
+    Component.onCompleted:
+    {
+        oldX = x
+        oldY = y
+        listParam.clear()
+    }
     function addParam(nom, value)
     {
         listParam.append({_nom:nom,value:value, index:listParam.count})
+        editableAction.ajoutParametre(nom,value)
     }
 
     EditableAction
     {
+        id:editableAction
         xBloc: element.x
         yBloc: element.y
     }
@@ -141,6 +165,10 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin:2
                     anchors.bottom: parent.bottom
+                    onTextChanged:
+                    {
+                        editableAction.modifierValue(_nom,text)
+                    }
                 }
             }
         }
@@ -151,13 +179,12 @@ Item {
         ListElement{ _nom:"x" ; value:"0" ; index : 0}
     }
 
-    Rectangle {
+    BlocEntree {
         id: rectangleEntree
-        objectName: "entree"
+        _color: "green"
         x: -313
         width: 10
         height: 10
-        color: "green"
         radius: 5
         anchors.right: parent.left
         anchors.rightMargin: -5
