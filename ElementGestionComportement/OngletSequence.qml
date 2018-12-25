@@ -18,6 +18,7 @@ Item {
         {
             repeaterBloc.itemAt(listBloc.count-1).addParam(gestTypeAction.getNameParam(indice,i),gestTypeAction.getValueParam(indice,i));
         }
+        gestionSequence.ajoutAction(repeaterBloc.itemAt(listBloc.count-1).cppBloc)
     }
 
 

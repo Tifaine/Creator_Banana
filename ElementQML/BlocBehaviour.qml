@@ -12,6 +12,7 @@ Item {
     width:200
     property int oldX: 0
     property int oldY: 0
+    property var cppBloc:editableAction
     height:30+listParam.count*35
     onXChanged:
     {
@@ -45,6 +46,7 @@ Item {
     EditableAction
     {
         id:editableAction
+        nomAction: name
         xBloc: element.x
         yBloc: element.y
     }
@@ -190,8 +192,6 @@ Item {
         anchors.rightMargin: -5
         anchors.top: parent.top
         anchors.topMargin: 10
-
-
     }
 
     BlocSortie {

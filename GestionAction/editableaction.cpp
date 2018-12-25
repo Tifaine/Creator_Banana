@@ -32,6 +32,16 @@ void EditableAction::ajoutParametre(QString nomParam, QString value)
     listParam.last()->valueParam = value;
 }
 
+QString EditableAction::getNomAction() const
+{
+    return nomAction;
+}
+
+void EditableAction::setNomAction(const QString &value)
+{
+    nomAction = value;
+}
+
 void EditableAction::modifierValue(QString nomParam, QString nouvelleValue)
 {
     for(int i=0;i<listParam.size();i++)

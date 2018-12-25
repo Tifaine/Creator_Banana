@@ -5,6 +5,7 @@
 #include "GestionAction/editableaction.h"
 #include "GestionAction/gestioncreationaction.h"
 #include "GestionAction/gestiontypeaction.h"
+#include "GestionAction/gestionsequence.h"
 #include "ElementQML/connector.h"
 
 int main(int argc, char *argv[])
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
 
     GestionCreationAction gestAction;
     GestionTypeAction gestTypeAction;
+    GestionSequence gestSequence;
 
     qmlRegisterType<EditableAction>("editableAction", 1, 0, "EditableAction");
     qmlRegisterType<connector>("connector", 1, 0, "Liaison");
@@ -22,6 +24,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("gestAction", &gestAction);
     engine.rootContext()->setContextProperty("gestTypeAction", &gestTypeAction);
+    engine.rootContext()->setContextProperty("gestionSequence", &gestSequence);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
