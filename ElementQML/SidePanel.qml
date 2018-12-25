@@ -69,10 +69,7 @@ Item {
                     font.pixelSize: 12
                     color:indiceAffiche==1?"white":"black"
                 }
-
-
             }
-
         }
 
         ColumnLayout {
@@ -167,10 +164,10 @@ Item {
                 }
             }
         }
-
     }
 
-    Rectangle {
+    Rectangle
+    {
         id: rectangle
         width: 1
         color: "#000000"

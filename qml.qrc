@@ -3,7 +3,9 @@
         <file>main.qml</file>
         <file>ElementQML/SidePanel.qml</file>
         <file>ElementQML/PageCreationAction.qml</file>
+        <file>ElementQML/BlocBehaviour.qml</file>
         <file>ElementGestionComportement/MainPageComportement.qml</file>
         <file>ElementGestionComportement/SidePanelComportement.qml</file>
+        <file>ElementGestionComportement/OngletSequence.qml</file>
     </qresource>
 </RCC>

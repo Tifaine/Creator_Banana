@@ -6,10 +6,17 @@ Item {
     id: element1
     width: 200
     height: 800
+    signal creerBloc(string nom)
 
     Component.onCompleted:
     {
         refresh()
+    }
+
+    Connections
+    {
+        target:gestTypeAction
+        onFinUpdate:refresh();
     }
 
     function refresh()
@@ -32,6 +39,13 @@ Item {
         id:rectangle1
         anchors.fill: parent
         color:"transparent"
+
+        function updateColor(indice)
+        {
+            behaviorSelected = indice
+        }
+
+        property int behaviorSelected:-1
         Flickable
         {
             id: flickable
@@ -62,36 +76,57 @@ Item {
                 anchors.fill: parent
                 Rectangle
                 {
-                    Component.onCompleted: console.log(index,anchors.topMargin)
                     id:rect
-                    height:50
-                    width:100
-                    color:"transparent"
+                    height:40
+                    width:90
+                    color:rectangle1.behaviorSelected==index?"#262626":"transparent"
+
                     radius: 1
                     border.width: 1
                     anchors.left: repeaterParameter.left
-                    anchors.leftMargin: (index%2)==1?100:0
+                    anchors.leftMargin: (index%2)==1?105:5
                     anchors.top: repeaterParameter.top
-                    anchors.topMargin:(index%2)==1?(index==1?0:(Math.floor(index/2))*50):((index/2)*50)
+                    anchors.topMargin:(index%2)==1?(index==1?0:(Math.floor(index/2))*50)+5:((index/2)*50)+5
                     Text {
                         id: nomComportement
                         text: _nom
+                        color:rectangle1.behaviorSelected==index?"white":"black"
                         anchors.fill: parent
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     }
+
+                    Menu
+                    {
+                        id:menu
+                        MenuItem
+                        {
+                            text: "Ajouter action"
+                            onTriggered: creerBloc(_nom)
+                        }
+                    }
+
+                    MouseArea
+                    {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked:
+                        {
+                            rectangle1.updateColor(index)
+                            if (mouse.button === Qt.RightButton)
+                            {
+                                menu.popup()
+                            }
+                        }
+                    }
                 }
-
-
             }
         }
-
     }
 
     Rectangle {
         id: rectangle
-
         width: 1
         color: "#000000"
         anchors.right: parent.right

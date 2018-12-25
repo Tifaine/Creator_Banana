@@ -44,4 +44,5 @@ HEADERS += \
 
 DISTFILES += \
     ElementQML/gestionComportement/mainPage.qml \
-    ElementQML/gestionComportement/SidePanelAction.qml
+    ElementQML/gestionComportement/SidePanelAction.qml \
+    ElementQML/BlocBehaviour.qml

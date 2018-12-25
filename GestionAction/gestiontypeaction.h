@@ -18,14 +18,21 @@ public:
     explicit GestionTypeAction(QObject *parent = nullptr);
 
 signals:
-
+    void finUpdate();
 public slots:
     void update();
     int getNbAction();
     QString getNomAction(int indice);
 
+    int getNbParam(int indice);
+    QString getNameParam(int indiceAction, int indiceParam);
+    QString getValueParam(int indiceAction, int indiceParam);
+    int getIndiceByName(QString name);
+    bool getIsBlocant(int indiceAction);
+
 private:
     QList<Action*> listAction;
+
 
 };
 

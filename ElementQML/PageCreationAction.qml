@@ -229,6 +229,7 @@ Item {
                 gestAction.setNouveauParam(repeaterParameter.itemAt(i).children[0].text,repeaterParameter.itemAt(i).children[1].text)
             }
             gestAction.saveAction();
+            gestTypeAction.update();
         }
     }
 }
