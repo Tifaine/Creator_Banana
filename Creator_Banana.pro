@@ -20,7 +20,9 @@ SOURCES += \
     libXML/tinyxmlerror.cpp \
     libXML/tinyxmlparser.cpp \
     GestionAction/action.cpp \
-    GestionAction/gestiontypeaction.cpp
+    GestionAction/gestiontypeaction.cpp \
+    GestionAction/editableaction.cpp \
+    ElementQML/connector.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,7 +42,9 @@ HEADERS += \
     libXML/tinystr.h \
     libXML/tinyxml.h \
     GestionAction/action.h \
-    GestionAction/gestiontypeaction.h
+    GestionAction/gestiontypeaction.h \
+    GestionAction/editableaction.h \
+    ElementQML/connector.h
 
 DISTFILES += \
     ElementQML/gestionComportement/mainPage.qml \

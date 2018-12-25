@@ -2,8 +2,10 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include "GestionAction/editableaction.h"
 #include "GestionAction/gestioncreationaction.h"
 #include "GestionAction/gestiontypeaction.h"
+#include "ElementQML/connector.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +15,9 @@ int main(int argc, char *argv[])
 
     GestionCreationAction gestAction;
     GestionTypeAction gestTypeAction;
+
+    qmlRegisterType<EditableAction>("editableAction", 1, 0, "EditableAction");
+    qmlRegisterType<connector>("connector", 1, 0, "Liaison");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("gestAction", &gestAction);

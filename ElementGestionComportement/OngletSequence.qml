@@ -13,25 +13,19 @@ Item {
     function addBloc(indice)
     {
         listBloc.append({_nom:gestTypeAction.getNomAction(indice), index:listBloc.count, _x:100, _y:10100})
-        repeaterParameter.itemAt(listBloc.count-1).isBlocant = gestTypeAction.getIsBlocant(indice)
+        repeaterBloc.itemAt(listBloc.count-1).isBlocant = gestTypeAction.getIsBlocant(indice)
         for(var i =0; i<gestTypeAction.getNbParam(indice);i++)
         {
-            repeaterParameter.itemAt(listBloc.count-1).addParam(gestTypeAction.getNameParam(indice,i),gestTypeAction.getValueParam(indice,i));
+            repeaterBloc.itemAt(listBloc.count-1).addParam(gestTypeAction.getNameParam(indice,i),gestTypeAction.getValueParam(indice,i));
         }
-console.log(repeaterParameter.itemAt(listBloc.count-1).isBlocant, gestTypeAction.getIsBlocant(indice))
-
     }
 
-    ListModel
-    {
-        id:listBloc
-        ListElement{ _nom:"Deplacement" ;_x:100; _y:10100; index : 0}
-    }
+
 
     Rectangle
     {
         anchors.fill: parent
-        color:"transparent"
+        color:"#e6e6e6"
 
         function updateColor(indice)
         {
@@ -61,19 +55,144 @@ console.log(repeaterParameter.itemAt(listBloc.count-1).isBlocant, gestTypeAction
                 anchors.right: flickable.right
                 anchors.bottom: flickable.bottom
             }
-
-            Repeater
+            Rectangle
             {
-                id:repeaterParameter
-                model:listBloc
+                id:rect1
                 anchors.fill: parent
-                BlocBehaviour
+                color:"transparent"
+                focus:true
+
+                MouseArea
                 {
-                    x:_x
-                    y:_y
-                    name:_nom
+                    id:mouseArea
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    anchors.fill: parent
+                    propagateComposedEvents: true
+                    property var obj
+                    property var obj2
+                    property var sortieCourante:null
+                    property var entreePopup:null
+                    property int indice : -1
+                    onWheel:
+                    {
+
+                    }
+                    onPressed:
+                    {
+
+                        if(mouse.button === Qt.LeftButton)
+                        {
+                            indice = rect1.areYouThere(mouse.x,mouse.y)
+                            if(indice!=-1)
+                            {
+
+                                obj = repeaterBloc.itemAt(indice)
+                                if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "Sortie")
+                                {
+                                    flickable.interactive = false
+                                    sortieCourante = obj.childAt(mouse.x-obj.x,mouse.y-obj.y)
+                                }
+                            }
+                        }
+                    }
+                    onReleased:
+                    {
+                        if(mouse.button === Qt.LeftButton && sortieCourante !==null)
+                        {
+                            indice = rect1.areYouThere(mouse.x,mouse.y)
+                            if(indice!=-1)
+                            {
+
+                                obj = repeaterBloc.itemAt(indice)
+                                if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "entree")
+                                {
+                                    sortieCourante.valideSortie(obj)
+                                }else
+                                {
+                                    sortieCourante.repaint(5,5);
+                                }
+                            }else
+                            {
+                                sortieCourante.repaint(5,5);
+                            }
+                        }
+
+                        flickable.interactive = true
+                        sortieCourante=null
+                    }
+                    onMouseXChanged:
+                    {
+                        if(sortieCourante!==null)
+                        {
+                            sortieCourante.repaint(mouse.x-sortieCourante.parent.x-sortieCourante.x
+                                                   , mouse.y-sortieCourante.parent.y-sortieCourante.y)
+
+                            if(mouse.x > flickable.contentX+element1.width-20 )
+                            {
+                                flickable.contentX = mouse.x - element1.width + 50
+                            }else if(mouse.x < flickable.contentX && flickable.contentX > 0)
+                            {
+                                flickable.contentX = mouse.x - 50
+                            }
+                        }
+                    }
+                    onMouseYChanged:
+                    {
+                        if(sortieCourante!==null)
+                        {
+                            sortieCourante.repaint(mouse.x-sortieCourante.parent.x-sortieCourante.x
+                                                   , mouse.y-sortieCourante.parent.y-sortieCourante.y)
+
+                            if(mouse.y > flickable.contentY+element1.height-20)
+                            {
+                                flickable.contentY = mouse.y - element1.height + 50
+                            }else if(mouse.y < flickable.contentY && mouse.y > 0)
+                            {
+                                flickable.contentY = mouse.y - 50
+                            }
+                        }
+                    }
                 }
 
+                ListModel
+                {
+                    id:listBloc
+                    ListElement{ _nom:"Deplacement" ;_x:100; _y:10100; index : 0}
+                }
+
+                Repeater
+                {
+                    id:repeaterBloc
+                    model:listBloc
+                    anchors.fill: parent
+                    BlocBehaviour
+                    {
+                        x:_x
+                        y:_y
+                        name:_nom
+                    }
+                }
+
+                function areYouThere(mouseX, mouseY)
+                {
+                    for(var i=0; i<listBloc.count;i++)
+                    {
+                        if(mouseX+5 > repeaterBloc.itemAt(i).x)
+                        {
+                            if(mouseX-5 < repeaterBloc.itemAt(i).x + repeaterBloc.itemAt(i).width)
+                            {
+                                if(mouseY > repeaterBloc.itemAt(i).y)
+                                {
+                                    if(mouseY < repeaterBloc.itemAt(i).y + repeaterBloc.itemAt(i).height)
+                                    {
+                                        return i
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return -1
+                }
             }
         }
     }

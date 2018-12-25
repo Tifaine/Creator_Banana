@@ -25,7 +25,6 @@ void Action::setIsBlocant(bool value)
     isBlocant = value;
 }
 
-
 void Action::setNouveauParam(QString nom, QString valueDefault)
 {
     parametre nouveauParam;

@@ -1,7 +1,12 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
+import editableAction 1.0
+
 
 Item {
+    id: element
+    z:1
+    objectName: "BlocBehaviour"
     property bool isBlocant:false
     property string name:"Action"
     width:200
@@ -14,6 +19,29 @@ Item {
         listParam.append({_nom:nom,value:value, index:listParam.count})
     }
 
+    EditableAction
+    {
+        xBloc: element.x
+        yBloc: element.y
+    }
+
+
+    MouseArea
+    {
+        id:mouseArea3
+        anchors.fill: parent
+        anchors.leftMargin: 25
+        anchors.rightMargin: 25
+
+        drag.target: parent;
+        propagateComposedEvents:true
+        hoverEnabled: true
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked:
+        {
+            console.log("clich")
+        }
+    }
 
     Rectangle {
         id: fond
@@ -122,14 +150,56 @@ Item {
         id:listParam
         ListElement{ _nom:"x" ; value:"0" ; index : 0}
     }
+
+    Rectangle {
+        id: rectangleEntree
+        objectName: "entree"
+        x: -313
+        width: 10
+        height: 10
+        color: "green"
+        radius: 5
+        anchors.right: parent.left
+        anchors.rightMargin: -5
+        anchors.top: parent.top
+        anchors.topMargin: 10
+
+
+    }
+
+    BlocSortie {
+        id: rectangleSortie
+        width: 10
+        height: 10
+        _color: "#ff0000"
+
+        anchors.left: parent.right
+        anchors.leftMargin: -5
+        anchors.top: parent.top
+        anchors.topMargin: isBlocant==1?5:10
+
+    }
+
+    BlocSortie {
+        id: rectangleTimeout
+        visible:isBlocant==1?true:false
+        width: 10
+        height: 10
+        _color: "yellow"
+
+        anchors.left: parent.right
+        anchors.leftMargin: -5
+        anchors.top: parent.top
+        anchors.topMargin: 20
+
+    }
 }
 
 
 
 
 
-
 /*##^## Designer {
-    D{i:1;anchors_height:200;anchors_width:200;anchors_x:"-19";anchors_y:73}
+    D{i:22;anchors_y:0}D{i:23;anchors_x:"-235";anchors_y:94}D{i:24;anchors_x:173;anchors_y:106}
 }
  ##^##*/
