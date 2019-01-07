@@ -43,12 +43,23 @@ Item {
         editableAction.ajoutParametre(nom,value)
     }
 
+    function addActionFille(fille)
+    {
+        editableAction.ajoutActionFille(fille.cppBloc)
+    }
+
+    function addActionFilleTimeOut(fille)
+    {
+        editableAction.ajoutActionFilleTimeOut(fille.cppBloc)
+    }
+
     EditableAction
     {
         id:editableAction
         nomAction: name
         xBloc: element.x
         yBloc: element.y
+        isActionBlocante: isBlocant
     }
 
 
@@ -199,7 +210,7 @@ Item {
         width: 10
         height: 10
         _color: "#ff0000"
-
+        objectName: "Sortie"
         anchors.left: parent.right
         anchors.leftMargin: -5
         anchors.top: parent.top
@@ -213,7 +224,7 @@ Item {
         width: 10
         height: 10
         _color: "yellow"
-
+        objectName: "timeOut"
         anchors.left: parent.right
         anchors.leftMargin: -5
         anchors.top: parent.top

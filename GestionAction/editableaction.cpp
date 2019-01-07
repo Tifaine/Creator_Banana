@@ -54,5 +54,26 @@ void EditableAction::modifierValue(QString nomParam, QString nouvelleValue)
             qDebug()<<listParam.at(i)->nomParam<<" "<<listParam.at(i)->valueParam;
         }
     }
+}
 
+void EditableAction::ajoutActionFille(EditableAction * act)
+{
+    listActionFille.append(act);
+    qDebug()<<listActionFille.last()->nomAction;
+}
+
+void EditableAction::ajoutActionFilleTimeOut(EditableAction * act)
+{
+    listActionFilleTimeOut.append(act);
+    qDebug()<<"Coucou "<<listActionFilleTimeOut.last()->nomAction;
+}
+
+bool EditableAction::getIsActionBlocante() const
+{
+    return isActionBlocante;
+}
+
+void EditableAction::setIsActionBlocante(bool value)
+{
+    isActionBlocante = value;
 }

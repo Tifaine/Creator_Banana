@@ -28,6 +28,22 @@ Item {
         ListElement{ _nom:"Séquence principale" ; _index:0}
         ListElement{ _nom:"Deux" ; _index:1}
     }
+    Button
+    {
+        id:buttonSave
+        anchors.top: parent.top
+        anchors.topMargin: 2
+        anchors.right: parent.right
+        anchors.rightMargin: 2
+        height:20
+        width:40
+        z:5
+        text:"Save"
+        onClicked:
+        {
+            gestionSequence.exportXML()
+        }
+    }
 
     TabView
     {
@@ -35,7 +51,7 @@ Item {
         anchors.left: sidePanelComportement.right
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.top: parent.top
+        anchors.top: buttonSave.bottom
         anchors.leftMargin: 0
         style: TabViewStyle {
             frameOverlap: 1

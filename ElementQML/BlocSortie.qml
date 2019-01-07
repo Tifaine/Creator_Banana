@@ -8,7 +8,7 @@ Rectangle {
     height: 12
     color: _color
     radius: 5
-    objectName: "Sortie"
+
 
     property var tabFils:[]
 

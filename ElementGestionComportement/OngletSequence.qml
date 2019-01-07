@@ -21,8 +21,6 @@ Item {
         gestionSequence.ajoutAction(repeaterBloc.itemAt(listBloc.count-1).cppBloc)
     }
 
-
-
     Rectangle
     {
         anchors.fill: parent
@@ -88,7 +86,7 @@ Item {
                             {
 
                                 obj = repeaterBloc.itemAt(indice)
-                                if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "Sortie")
+                                if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "Sortie" ||obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "timeOut"  )
                                 {
                                     flickable.interactive = false
                                     sortieCourante = obj.childAt(mouse.x-obj.x,mouse.y-obj.y)
@@ -109,6 +107,15 @@ Item {
                                 if(obj2.objectName === "Entree")
                                 {
                                     sortieCourante.valideSortie(obj2)
+
+                                    if(sortieCourante.objectName === "Sortie")
+                                    {
+                                        sortieCourante.parent.addActionFille(obj);
+                                    }else if(sortieCourante.objectName === "timeOut")
+                                    {
+                                        sortieCourante.parent.addActionFilleTimeOut(obj);
+                                    }
+
                                     obj2.addPere(sortieCourante)
                                 }else
                                 {
