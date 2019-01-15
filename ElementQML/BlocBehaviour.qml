@@ -45,8 +45,6 @@ Item {
         oldX = x
         oldY = y
         listParam.clear()
-
-        console.log(width,height)
     }
     function addParam(nom, value)
     {
@@ -101,8 +99,10 @@ Item {
         }
         onDoubleClicked:
         {
+
             if(element.name==="Sequence")
             {
+
                 creerSequence(repeaterParameter.itemAt(0).children[1].text)
             }
         }

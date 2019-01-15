@@ -15,7 +15,7 @@ void GestionSequence::clearList()
     listAction.clear();
 }
 
-int GestionSequence::ouvrirXML(QString nomFile)
+int GestionSequence::ouvrirXML(QString nomFile, int indice)
 {
     nomFile=nomFile.right(nomFile.size()-7);
     int rc = 0;
@@ -52,14 +52,14 @@ int GestionSequence::ouvrirXML(QString nomFile)
                             xBloc = (QString::fromStdString(pAttrib->Value())).toInt();
                             pAttrib=pAttrib->Next();
                             yBloc = (QString::fromStdString(pAttrib->Value())).toInt();
-                            ouvrirAction(nomAction,xBloc, yBloc);
+                            ouvrirAction(nomAction,xBloc, yBloc,indice);
                         }
                     }else if(elemNameBis == "parametres")
                     {
                         TiXmlAttribute* pAttrib=elemBis->FirstAttribute();
                         while (pAttrib)
                         {
-                            modifParam(QString::fromStdString(pAttrib->Name()), QString::fromStdString(pAttrib->Value()));
+                            modifParam(QString::fromStdString(pAttrib->Name()), QString::fromStdString(pAttrib->Value()),indice);
                             pAttrib=pAttrib->Next();
                         }
                     }
@@ -101,7 +101,7 @@ int GestionSequence::ouvrirXML(QString nomFile)
                         QStringList listFilsSplit = listFils.split(";");
                         for(int i=0;i<listFilsSplit.size()-1;i++)
                         {
-                            addFils(indiceAction,listFilsSplit.at(i).toInt());
+                            addFils(indiceAction,listFilsSplit.at(i).toInt(),indice);
                         }
                         //void addFils(int indiceParent, int indiceFils);
 
@@ -113,7 +113,7 @@ int GestionSequence::ouvrirXML(QString nomFile)
                         QStringList listFilsSplit = listFils.split(";");
                         for(int i=0;i<listFilsSplit.size()-1;i++)
                         {
-                            addTimeOut(indiceAction,listFilsSplit.at(i).toInt());
+                            addTimeOut(indiceAction,listFilsSplit.at(i).toInt(),indice);
                         }
                     }
                 }

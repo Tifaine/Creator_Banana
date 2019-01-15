@@ -18,13 +18,13 @@ public slots:
     void ajoutAction(EditableAction* act);
 
     void clearList();
-    int ouvrirXML(QString nomFile);
+    int ouvrirXML(QString nomFile, int indice);
     void exportXML(QString nomFile);
 signals:
-    void modifParam(QString nom, QString value);
-    void ouvrirAction(QString nomAction,int xBloc, int yBloc);
-    void addFils(int indiceParent, int indiceFils);
-    void addTimeOut(int indiceParent, int indiceFils);
+    void modifParam(QString nom, QString value, int indiceTab);
+    void ouvrirAction(QString nomAction,int xBloc, int yBloc, int indiceTab);
+    void addFils(int indiceParent, int indiceFils, int indiceTab);
+    void addTimeOut(int indiceParent, int indiceFils, int indiceTab);
 private:
     QList<EditableAction*> listAction;
 };

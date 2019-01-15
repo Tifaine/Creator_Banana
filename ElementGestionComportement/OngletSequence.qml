@@ -9,6 +9,7 @@ Item {
     height: 700
     property int xCourant:flickable.contentX
     property int yCourant:flickable.contentY
+    property int indiceTab:0
 
     signal newSequence(string nom)
     Component.onCompleted:
@@ -49,29 +50,41 @@ Item {
         target: gestionSequence
         onOuvrirAction:
         {
-            addBloc(gestTypeAction.getIndiceByName(nomAction), xBloc, yBloc)
+            if(element1.indiceTab===indiceTab)
+            {
+                addBloc(gestTypeAction.getIndiceByName(nomAction), xBloc, yBloc)
+            }
 
         }
         onModifParam:
         {
-            repeaterBloc.itemAt(listBloc.count-1).modifValueParam(nom,value);
+            if(element1.indiceTab===indiceTab)
+            {
+                repeaterBloc.itemAt(listBloc.count-1).modifValueParam(nom,value);
+            }
         }
         onAddFils:
         {
-            repeaterBloc.itemAt(indiceParent).blocSortie.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x
-                                                                 ,repeaterBloc.itemAt(indiceFils).y+15-repeaterBloc.itemAt(indiceParent).y-repeaterBloc.itemAt(indiceParent).blocEntree.y)
-            repeaterBloc.itemAt(indiceParent).blocSortie.valideSortie(repeaterBloc.itemAt(indiceFils).blocEntree)
-            repeaterBloc.itemAt(indiceParent).addActionFille(repeaterBloc.itemAt(indiceFils))
-            repeaterBloc.itemAt(indiceFils).blocEntree.addPere(repeaterBloc.itemAt(indiceParent).blocSortie)
+            if(element1.indiceTab===indiceTab)
+            {
+                repeaterBloc.itemAt(indiceParent).blocSortie.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x
+                                                                     ,repeaterBloc.itemAt(indiceFils).y+15-repeaterBloc.itemAt(indiceParent).y-repeaterBloc.itemAt(indiceParent).blocEntree.y)
+                repeaterBloc.itemAt(indiceParent).blocSortie.valideSortie(repeaterBloc.itemAt(indiceFils).blocEntree)
+                repeaterBloc.itemAt(indiceParent).addActionFille(repeaterBloc.itemAt(indiceFils))
+                repeaterBloc.itemAt(indiceFils).blocEntree.addPere(repeaterBloc.itemAt(indiceParent).blocSortie)
+            }
         }
 
         onAddTimeOut:
         {
-            repeaterBloc.itemAt(indiceParent).blocTimeout.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x
-                                                                 ,repeaterBloc.itemAt(indiceFils).y+15-repeaterBloc.itemAt(indiceParent).y-repeaterBloc.itemAt(indiceParent).blocEntree.y)
-            repeaterBloc.itemAt(indiceParent).blocTimeout.valideSortie(repeaterBloc.itemAt(indiceFils).blocEntree)
-            repeaterBloc.itemAt(indiceParent).addActionFilleTimeOut(repeaterBloc.itemAt(indiceFils))
-            repeaterBloc.itemAt(indiceFils).blocEntree.addPere(repeaterBloc.itemAt(indiceParent).blocTimeout)
+            if(element1.indiceTab===indiceTab)
+            {
+                repeaterBloc.itemAt(indiceParent).blocTimeout.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x
+                                                                      ,repeaterBloc.itemAt(indiceFils).y+15-repeaterBloc.itemAt(indiceParent).y-repeaterBloc.itemAt(indiceParent).blocEntree.y)
+                repeaterBloc.itemAt(indiceParent).blocTimeout.valideSortie(repeaterBloc.itemAt(indiceFils).blocEntree)
+                repeaterBloc.itemAt(indiceParent).addActionFilleTimeOut(repeaterBloc.itemAt(indiceFils))
+                repeaterBloc.itemAt(indiceFils).blocEntree.addPere(repeaterBloc.itemAt(indiceParent).blocTimeout)
+            }
         }
     }
     function clearListBloc()

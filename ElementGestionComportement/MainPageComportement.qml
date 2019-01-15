@@ -80,7 +80,7 @@ Item {
         nameFilters: [ "XML files (*.xml )" ]
         onAccepted: {
             bar.getTab(bar.currentIndex).children[0].clearListBloc()
-            gestionSequence.ouvrirXML(fileDialog.fileUrl)
+            gestionSequence.ouvrirXML(fileDialog.fileUrl,bar.currentIndex)
         }
     }
 
@@ -106,7 +106,7 @@ Item {
                     id: text
                     anchors.centerIn: parent
                     text: styleData.title
-                    color: styleData.selected ?"white":"black"
+                    color: styleData.selected ?"white":"white"
                 }
                 MouseArea
                 {
@@ -139,9 +139,16 @@ Item {
                 OngletSequence {
                     id: ongletSequence
                     anchors.fill: parent
-                    onNewSequence: console.log("On demande :"+nom)
-                }
+                    indiceTab:index
+                    onNewSequence://
+                    {
+                        listOnglet.append({_nom:nom, index:listOnglet.count})
+                        bar.currentIndex = listOnglet.count-1
+                        bar.getTab(bar.currentIndex).children[0].clearListBloc()
+                        gestionSequence.ouvrirXML("aaaaaaares/Sequence/"+nom, bar.currentIndex)
 
+                    }
+                }
             }
         }
     }
