@@ -1,4 +1,4 @@
-import QtQuick 2.11
+import QtQuick 2.9
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
@@ -16,6 +16,10 @@ Item {
     property int oldX: 0
     property int oldY: 0
     property var cppBloc:editableAction
+
+    property var blocSortie:rectangleSortie
+    property var blocEntree:rectangleEntree
+    property var blocTimeout:rectangleTimeout
 
     signal creerSequence(string nom)
     height:30+listParam.count*35
@@ -41,6 +45,8 @@ Item {
         oldX = x
         oldY = y
         listParam.clear()
+
+        console.log(width,height)
     }
     function addParam(nom, value)
     {
@@ -56,6 +62,17 @@ Item {
     function addActionFilleTimeOut(fille)
     {
         editableAction.ajoutActionFilleTimeOut(fille.cppBloc)
+    }
+
+    function modifValueParam(nomParam, valueParam)
+    {
+        for(var i=0;i<listParam.count;i++)
+        {
+            if(listParam.get(i)._nom === nomParam)
+            {
+                listParam.get(i).value = valueParam
+            }
+        }
     }
 
     EditableAction
@@ -81,7 +98,6 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked:
         {
-            console.log("clich")
         }
         onDoubleClicked:
         {
@@ -103,7 +119,7 @@ Item {
         Rectangle {
             id: fondEntete
             height: 25
-            color: isBlocant==true?"pink":"transparent"
+            color: isBlocant==true?"#3366ff":"transparent"
             radius: 10
             border.width: 0
             anchors.right: parent.right

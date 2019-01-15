@@ -61,7 +61,6 @@ Rectangle {
 
     function valideSortie(blocEntree)
     {
-        console.log(repeaterLien.itemAt(listLien.count-1).x2,repeaterLien.itemAt(listLien.count-1).y2)
         rectangleSortie.tabFils.push(blocEntree)
         listLien.append({_x1:5,_y1:5, _x2:5,_y2:5})
     }

@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.3
+import QtQuick.Controls 2.2
 
 Item {
     id: element1
@@ -17,11 +17,12 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 30
         font.pixelSize: 30
+        color:"white"
     }
 
     Rectangle {
         id: rectangle
-        color: "#000000"
+        color: "white"
         anchors.right: parent.right
         anchors.rightMargin: parent.width/2-1
         anchors.bottom: parent.bottom
@@ -43,6 +44,7 @@ Item {
         anchors.topMargin: 35
         font.bold: true
         font.pixelSize: 16
+        color:"white"
     }
 
     RadioButton {
@@ -62,6 +64,7 @@ Item {
         id: textActionBlocante
         height: 40
         text: qsTr("Action blocante ?")
+        color:"white"
         font.bold: true
         verticalAlignment: Text.AlignVCenter
         anchors.left: radioButtonBlocant.right
@@ -81,25 +84,15 @@ Item {
         anchors.topMargin: 35
     }
 
-    ComboBox {
-        id: comboBoxCategorie
-        width: 200
-        font.bold: true
-        font.pixelSize: 16
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-        anchors.top: radioButtonBlocant.bottom
-        anchors.topMargin: 25
-        model: [ "Banana", "Apple", "Coconut" ]
 
-    }
 
     Text {
         id: elementCategorieAction
         height: 40
+        color:"white"
         text: qsTr("Catégorie de l'action")
-        anchors.left: comboBoxCategorie.right
-        anchors.leftMargin: 25
+        anchors.left: parent.left
+        anchors.leftMargin: 70
         anchors.top: textActionBlocante.bottom
         anchors.topMargin: 25
         font.bold: true
@@ -110,21 +103,24 @@ Item {
     Text {
         id: elementNameParam
         text: qsTr("Nom paramètre")
+        color:"white"
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         anchors.right: parent.right
         anchors.rightMargin: 3*parent.width/4+5
         anchors.left: parent.left
         anchors.leftMargin: 5
-        anchors.top: comboBoxCategorie.bottom
-        anchors.topMargin: 50
+        anchors.top: parent.top
+        anchors.topMargin: 321
         font.pixelSize: 16
     }
 
     Text {
         id: elementDefaultValue
-        y: 321
         text: qsTr("Valeur par défaut")
+        anchors.top: parent.top
+        anchors.topMargin: 321
+        color:"white"
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         anchors.right: rectangle.left

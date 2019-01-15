@@ -1,7 +1,9 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.3
+import QtQuick.Controls 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.0
+
 
 Item {
     id: element1
@@ -19,7 +21,7 @@ Item {
         anchors.topMargin: 0
         onCreerBloc:
         {
-            bar.getTab(bar.currentIndex).children[0].addBloc(gestTypeAction.getIndiceByName(nom))
+            bar.getTab(bar.currentIndex).children[0].addBloc(gestTypeAction.getIndiceByName(nom),bar.getTab(bar.currentIndex).children[0].xCourant+100,bar.getTab(bar.currentIndex).children[0].yCourant+100)
         }
     }
 
@@ -27,6 +29,17 @@ Item {
     {
         id:listOnglet
         ListElement{ _nom:"Séquence principale" ; _index:0}
+    }
+
+    FileDialog {
+        id: fileDialogSaveAs
+        title: "Please choose a file"
+        folder: shortcuts.home
+        nameFilters: [ "XML files (*.xml )" ]
+        selectExisting: false
+        onAccepted: {
+            gestionSequence.exportXML(fileDialogSaveAs.fileUrl)
+        }
     }
     Button
     {
@@ -41,7 +54,33 @@ Item {
         text:"Save"
         onClicked:
         {
-            gestionSequence.exportXML()
+            fileDialogSaveAs.open()
+        }
+    }
+    Button
+    {
+        id:buttonOpen
+        anchors.top: parent.top
+        anchors.topMargin: 2
+        anchors.right: buttonSave.left
+        anchors.rightMargin: 20
+        height:20
+        width:40
+        z:5
+        text:"Ouvrir"
+        onClicked:
+        {
+            fileDialog.open()
+        }
+    }
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: shortcuts.home
+        nameFilters: [ "XML files (*.xml )" ]
+        onAccepted: {
+            bar.getTab(bar.currentIndex).children[0].clearListBloc()
+            gestionSequence.ouvrirXML(fileDialog.fileUrl)
         }
     }
 

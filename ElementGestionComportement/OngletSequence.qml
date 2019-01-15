@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import "../ElementQML"
@@ -7,13 +7,82 @@ Item {
     id: element1
     width: 1200
     height: 700
+    property int xCourant:flickable.contentX
+    property int yCourant:flickable.contentY
 
     signal newSequence(string nom)
-    //Component.onCompleted: listBloc.clear()
-
-    function addBloc(indice)
+    Component.onCompleted:
     {
-        listBloc.append({_nom:gestTypeAction.getNomAction(indice), index:listBloc.count, _x:100, _y:10100})
+        listBloc.clear()
+        addBloc(0,100,10100)
+
+    }
+
+    Shortcut {
+        sequence: "Ctrl+I"
+        onActivated:
+        {
+            for(var i=0; i<listBloc.count;i++)
+            {
+                if(repeaterBloc.itemAt(i).x % 20 <10)
+                {
+                    repeaterBloc.itemAt(i).x = repeaterBloc.itemAt(i).x - repeaterBloc.itemAt(i).x%20
+                }else
+                {
+                    repeaterBloc.itemAt(i).x = repeaterBloc.itemAt(i).x + 20-(repeaterBloc.itemAt(i).x%20)
+                }
+
+                if(repeaterBloc.itemAt(i).y % 20 <10)
+                {
+                    repeaterBloc.itemAt(i).y = repeaterBloc.itemAt(i).y - repeaterBloc.itemAt(i).y%20
+                }else
+                {
+                    repeaterBloc.itemAt(i).y = repeaterBloc.itemAt(i).y + 20-(repeaterBloc.itemAt(i).y%20)
+                }
+            }
+        }
+    }
+
+
+    Connections
+    {
+        target: gestionSequence
+        onOuvrirAction:
+        {
+            addBloc(gestTypeAction.getIndiceByName(nomAction), xBloc, yBloc)
+
+        }
+        onModifParam:
+        {
+            repeaterBloc.itemAt(listBloc.count-1).modifValueParam(nom,value);
+        }
+        onAddFils:
+        {
+            repeaterBloc.itemAt(indiceParent).blocSortie.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x
+                                                                 ,repeaterBloc.itemAt(indiceFils).y+15-repeaterBloc.itemAt(indiceParent).y-repeaterBloc.itemAt(indiceParent).blocEntree.y)
+            repeaterBloc.itemAt(indiceParent).blocSortie.valideSortie(repeaterBloc.itemAt(indiceFils).blocEntree)
+            repeaterBloc.itemAt(indiceParent).addActionFille(repeaterBloc.itemAt(indiceFils))
+            repeaterBloc.itemAt(indiceFils).blocEntree.addPere(repeaterBloc.itemAt(indiceParent).blocSortie)
+        }
+
+        onAddTimeOut:
+        {
+            repeaterBloc.itemAt(indiceParent).blocTimeout.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x
+                                                                 ,repeaterBloc.itemAt(indiceFils).y+15-repeaterBloc.itemAt(indiceParent).y-repeaterBloc.itemAt(indiceParent).blocEntree.y)
+            repeaterBloc.itemAt(indiceParent).blocTimeout.valideSortie(repeaterBloc.itemAt(indiceFils).blocEntree)
+            repeaterBloc.itemAt(indiceParent).addActionFilleTimeOut(repeaterBloc.itemAt(indiceFils))
+            repeaterBloc.itemAt(indiceFils).blocEntree.addPere(repeaterBloc.itemAt(indiceParent).blocTimeout)
+        }
+    }
+    function clearListBloc()
+    {
+        gestionSequence.clearList()
+        listBloc.clear()
+    }
+
+    function addBloc(indice, xBloc, yBloc)
+    {
+        listBloc.append({_nom:gestTypeAction.getNomAction(indice), index:listBloc.count, _x:xBloc, _y:yBloc})
         repeaterBloc.itemAt(listBloc.count-1).isBlocant = gestTypeAction.getIsBlocant(indice)
         for(var i =0; i<gestTypeAction.getNbParam(indice);i++)
         {
@@ -36,6 +105,7 @@ Item {
         Flickable
         {
             id: flickable
+            clip:true
             property real echelle :1.0
             anchors.fill: parent
             contentWidth: 20000; contentHeight: 20000
@@ -55,6 +125,7 @@ Item {
                 anchors.right: flickable.right
                 anchors.bottom: flickable.bottom
             }
+
             Rectangle
             {
                 id:rect1

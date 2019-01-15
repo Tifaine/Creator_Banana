@@ -16,7 +16,15 @@ public:
     GestionSequence(QObject *parent = nullptr);
 public slots:
     void ajoutAction(EditableAction* act);
-    void exportXML();
+
+    void clearList();
+    int ouvrirXML(QString nomFile);
+    void exportXML(QString nomFile);
+signals:
+    void modifParam(QString nom, QString value);
+    void ouvrirAction(QString nomAction,int xBloc, int yBloc);
+    void addFils(int indiceParent, int indiceFils);
+    void addTimeOut(int indiceParent, int indiceFils);
 private:
     QList<EditableAction*> listAction;
 };

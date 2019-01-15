@@ -125,19 +125,18 @@ Item {
                         MouseArea
                         {
                             anchors.fill: parent
+                            z:1
                             acceptedButtons: Qt.LeftButton | Qt.RightButton
                             onClicked:
                             {
                                 rectangle1.updateColor(index)
                                 if (mouse.button === Qt.RightButton)
                                 {
-                                    menu.popup()
+                                    menu.open()
                                 }
                             }
                         }
                     }
-
-
                 }
             }
         }
