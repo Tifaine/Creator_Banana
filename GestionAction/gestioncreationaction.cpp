@@ -8,7 +8,7 @@ GestionCreationAction::GestionCreationAction(QObject *parent) : QObject(parent)
 void GestionCreationAction::saveAction()
 {
     QString nomFile;
-    nomFile.append("res/");
+    nomFile.append("res/bloc/");
     nomFile.append(nomAction);
     nomFile.append(".xml");
     TiXmlDocument doc;

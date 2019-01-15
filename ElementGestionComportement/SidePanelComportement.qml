@@ -79,47 +79,65 @@ Item {
                     id:rect
                     height:40
                     width:90
-                    color:rectangle1.behaviorSelected==index?"#262626":"transparent"
+                    //color:rectangle1.behaviorSelected==index?"#262626":"transparent"
 
-                    radius: 1
+                    color: "#00ffffff"
+                    radius: 10
+                    border.color: "#ffffff"
                     border.width: 1
                     anchors.left: repeaterParameter.left
                     anchors.leftMargin: (index%2)==1?105:5
                     anchors.top: repeaterParameter.top
                     anchors.topMargin:(index%2)==1?(index==1?0:(Math.floor(index/2))*50)+5:((index/2)*50)+5
-                    Text {
-                        id: nomComportement
-                        text: _nom
-                        color:rectangle1.behaviorSelected==index?"white":"black"
-                        anchors.fill: parent
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    }
 
-                    Menu
+                    Rectangle
                     {
-                        id:menu
-                        MenuItem
-                        {
-                            text: "Ajouter action"
-                            onTriggered: creerBloc(_nom)
+                        color: "#0cfdfdfd"
+                        radius: 10
+                        anchors.right: parent.right
+                        anchors.rightMargin: 3
+                        anchors.left: parent.left
+                        anchors.leftMargin: 3
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 3
+                        anchors.top: parent.top
+                        anchors.topMargin: 3
+                        Text {
+                            id: nomComportement
+                            text: _nom
+                            color:rectangle1.behaviorSelected==index?"white":"white"
+                            anchors.fill: parent
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignHCenter
+                            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         }
-                    }
 
-                    MouseArea
-                    {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked:
+                        Menu
                         {
-                            rectangle1.updateColor(index)
-                            if (mouse.button === Qt.RightButton)
+                            id:menu
+                            MenuItem
                             {
-                                menu.popup()
+                                text: "Ajouter action"
+                                onTriggered: creerBloc(_nom)
+                            }
+                        }
+
+                        MouseArea
+                        {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onClicked:
+                            {
+                                rectangle1.updateColor(index)
+                                if (mouse.button === Qt.RightButton)
+                                {
+                                    menu.popup()
+                                }
                             }
                         }
                     }
+
+
                 }
             }
         }
@@ -128,7 +146,7 @@ Item {
     Rectangle {
         id: rectangle
         width: 1
-        color: "#000000"
+        color: "white"
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.bottom: parent.bottom

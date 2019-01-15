@@ -8,7 +8,8 @@ Item {
     width: 1200
     height: 700
 
-    Component.onCompleted: listBloc.clear()
+    signal newSequence(string nom)
+    //Component.onCompleted: listBloc.clear()
 
     function addBloc(indice)
     {
@@ -24,7 +25,7 @@ Item {
     Rectangle
     {
         anchors.fill: parent
-        color:"#e6e6e6"
+        color:"transparent"
 
         function updateColor(indice)
         {
@@ -167,7 +168,7 @@ Item {
                 ListModel
                 {
                     id:listBloc
-                    ListElement{ _nom:"Deplacement" ;_x:100; _y:10100; index : 0}
+                    ListElement{ _nom:"Depart" ;_x:100; _y:10100; index : 0}
                 }
 
                 Repeater
@@ -180,6 +181,10 @@ Item {
                         x:_x
                         y:_y
                         name:_nom
+                        onCreerSequence:
+                        {
+                            newSequence(nom)
+                        }
                     }
                 }
 

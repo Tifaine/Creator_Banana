@@ -33,6 +33,8 @@ public slots:
 private:
     QList<Action*> listAction;
 
+    void initList();
+
 
 };
 

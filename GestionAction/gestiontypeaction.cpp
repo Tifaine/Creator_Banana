@@ -5,16 +5,34 @@ GestionTypeAction::GestionTypeAction(QObject *parent) : QObject(parent)
     update();
 }
 
-void GestionTypeAction::update()
+void GestionTypeAction::initList()
 {
     listAction.clear();
-    QDir dir("res/");
+
+    listAction.append(new Action);
+    listAction.last()->setNomAction("Depart");
+    listAction.last()->setIsBlocant(false);
+
+    listAction.append(new Action);
+    listAction.last()->setNomAction("Fin");
+    listAction.last()->setIsBlocant(false);
+
+    listAction.append(new Action);
+    listAction.last()->setNomAction("Sequence");
+    listAction.last()->setIsBlocant(false);
+    listAction.last()->setNouveauParam("Nom","temp");
+}
+
+void GestionTypeAction::update()
+{
+    initList();
+    QDir dir("res/bloc/");
     QStringList listFiles = dir.entryList(QStringList() << "*.xml",QDir::Files);
     for(int i = 0 ;i<listFiles.size();i++)
     {
         listAction.append(new Action);
         QString nomFile;
-        nomFile.append("res/");
+        nomFile.append("res/bloc/");
         nomFile.append(listFiles.at(i));
         TiXmlDocument doc(nomFile.toStdString().c_str());
         if(!doc.LoadFile())

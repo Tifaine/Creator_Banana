@@ -79,6 +79,5 @@ void GestionSequence::exportXML()
 
 
     }
-    qDebug()<<"Coucou";
     doc.SaveFile( "out/temp.xml" );
 }

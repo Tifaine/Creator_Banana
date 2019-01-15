@@ -43,7 +43,7 @@ Item {
                 Rectangle {
                     id: rectangle1
                     height: 1
-                    color: "#000000"
+                    color: "white"
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -67,7 +67,7 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     font.pixelSize: 12
-                    color:indiceAffiche==1?"white":"black"
+                    color:indiceAffiche==1?"white":"white"
                 }
             }
         }
@@ -105,13 +105,13 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     font.pixelSize: 12
-                    color:indiceAffiche==2?"white":"black"
+                    color:indiceAffiche==2?"white":"white"
                 }
 
                 Rectangle {
                     id: rectangle2
                     height: 1
-                    color: "#000000"
+                    color: "white"
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -160,7 +160,7 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     font.pixelSize: 12
-                    color:indiceAffiche==3?"white":"black"
+                    color:indiceAffiche==3?"white":"white"
                 }
             }
         }
@@ -170,7 +170,7 @@ Item {
     {
         id: rectangle
         width: 1
-        color: "#000000"
+        color: "white"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.left: column.right

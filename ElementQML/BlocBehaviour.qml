@@ -1,5 +1,8 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.3
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.3
+import QtQuick.Controls.Styles 1.4
+import QtGraphicalEffects 1.0
 import editableAction 1.0
 
 
@@ -9,10 +12,12 @@ Item {
     objectName: "BlocBehaviour"
     property bool isBlocant:false
     property string name:"Action"
-    width:200
+    width:name=="Sequence"?300:200
     property int oldX: 0
     property int oldY: 0
     property var cppBloc:editableAction
+
+    signal creerSequence(string nom)
     height:30+listParam.count*35
     onXChanged:
     {
@@ -78,18 +83,28 @@ Item {
         {
             console.log("clich")
         }
+        onDoubleClicked:
+        {
+            if(element.name==="Sequence")
+            {
+                creerSequence(repeaterParameter.itemAt(0).children[1].text)
+            }
+        }
     }
 
     Rectangle {
         id: fond
-        color: "#ffffff"
+        color: "#0cfdfdfd"
+        radius: 10
         border.width: 1
+        border.color: "#ffffff"
         anchors.fill: parent
 
         Rectangle {
             id: fondEntete
             height: 25
             color: isBlocant==true?"pink":"transparent"
+            radius: 10
             border.width: 0
             anchors.right: parent.right
             anchors.rightMargin: 1
@@ -101,11 +116,11 @@ Item {
             Rectangle {
                 id: separationHeader
                 height: 1
-                color: "#000000"
+                color: "white"
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: 5
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 5
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
             }
@@ -113,6 +128,7 @@ Item {
             Text {
                 id: testNom
                 text: name
+                color:isBlocant==true?"black":"white"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 font.bold: true
@@ -154,11 +170,12 @@ Item {
                 Text {
                     id: textFieldNomParam
                     text: _nom
+                    color:"white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignRight
                     font.pixelSize: 16
                     anchors.right: parent.right
-                    anchors.rightMargin: parent.width/3+1
+                    anchors.rightMargin: element.name=="Sequence"?2*parent.width/3+1:parent.width/3+1
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.top: parent.top
@@ -174,10 +191,22 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin:2
                     anchors.left: parent.left
-                    anchors.leftMargin:  2*parent.width/3+5
+                    anchors.leftMargin: element.name=="Sequence"?1*parent.width/3+5:2*parent.width/3+5
+
                     anchors.top: parent.top
                     anchors.topMargin:2
                     anchors.bottom: parent.bottom
+                    style: TextFieldStyle {
+                        textColor: "white"
+                        background: Rectangle {
+                            color:"#22ffffff"
+                            radius: 10
+                            implicitWidth: 100
+                            implicitHeight: 24
+                            border.color: "#333"
+                            border.width: 1
+                        }
+                    }
                     onTextChanged:
                     {
                         editableAction.modifierValue(_nom,text)
@@ -203,6 +232,8 @@ Item {
         anchors.rightMargin: -5
         anchors.top: parent.top
         anchors.topMargin: 10
+        visible:element.name=="Depart"?false:true
+        enabled:element.name=="Depart"?false:true
     }
 
     BlocSortie {
@@ -215,7 +246,8 @@ Item {
         anchors.leftMargin: -5
         anchors.top: parent.top
         anchors.topMargin: isBlocant==1?5:10
-
+        enabled:element.name=="Fin"?false:true
+        visible:element.name=="Fin"?false:true
     }
 
     BlocSortie {
@@ -237,7 +269,4 @@ Item {
 
 
 
-/*##^## Designer {
-    D{i:22;anchors_y:0}D{i:23;anchors_x:"-235";anchors_y:94}D{i:24;anchors_x:173;anchors_y:106}
-}
- ##^##*/
+

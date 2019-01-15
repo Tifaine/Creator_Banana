@@ -50,8 +50,6 @@ void EditableAction::modifierValue(QString nomParam, QString nouvelleValue)
         {
             listParam.at(i)->valueParam.clear();
             listParam.at(i)->valueParam.append(nouvelleValue);
-
-            qDebug()<<listParam.at(i)->nomParam<<" "<<listParam.at(i)->valueParam;
         }
     }
 }
@@ -59,13 +57,11 @@ void EditableAction::modifierValue(QString nomParam, QString nouvelleValue)
 void EditableAction::ajoutActionFille(EditableAction * act)
 {
     listActionFille.append(act);
-    qDebug()<<listActionFille.last()->nomAction;
 }
 
 void EditableAction::ajoutActionFilleTimeOut(EditableAction * act)
 {
     listActionFilleTimeOut.append(act);
-    qDebug()<<"Coucou "<<listActionFilleTimeOut.last()->nomAction;
 }
 
 bool EditableAction::getIsActionBlocante() const

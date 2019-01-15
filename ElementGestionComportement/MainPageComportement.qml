@@ -9,6 +9,7 @@ Item {
     height: 800
 
     SidePanelComportement {
+        z:1
         id: sidePanelComportement
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -26,7 +27,6 @@ Item {
     {
         id:listOnglet
         ListElement{ _nom:"Séquence principale" ; _index:0}
-        ListElement{ _nom:"Deux" ; _index:1}
     }
     Button
     {
@@ -89,6 +89,7 @@ Item {
 
         Repeater
         {
+            z:-1
             id:repeaterOnglet
             model:listOnglet
             property int nbTabOpen:0
@@ -99,7 +100,7 @@ Item {
                 OngletSequence {
                     id: ongletSequence
                     anchors.fill: parent
-
+                    onNewSequence: console.log("On demande :"+nom)
                 }
 
             }
