@@ -1,6 +1,6 @@
 #include "gestionsequence.h"
 
-GestionSequence::GestionSequence(QObject *parent) : QObject(parent)
+GestionSequence::GestionSequence()
 {
 
 }

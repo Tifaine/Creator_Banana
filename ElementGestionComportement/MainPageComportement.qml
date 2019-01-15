@@ -38,7 +38,7 @@ Item {
         nameFilters: [ "XML files (*.xml )" ]
         selectExisting: false
         onAccepted: {
-            gestionSequence.exportXML(fileDialogSaveAs.fileUrl)
+            bar.getTab(bar.currentIndex).children[0].gestSequence.exportXML(fileDialogSaveAs.fileUrl)
         }
     }
     Button
@@ -80,7 +80,7 @@ Item {
         nameFilters: [ "XML files (*.xml )" ]
         onAccepted: {
             bar.getTab(bar.currentIndex).children[0].clearListBloc()
-            gestionSequence.ouvrirXML(fileDialog.fileUrl,bar.currentIndex)
+            bar.getTab(bar.currentIndex).children[0].gestSequence.ouvrirXML(fileDialog.fileUrl,bar.currentIndex)
         }
     }
 
@@ -145,7 +145,7 @@ Item {
                         listOnglet.append({_nom:nom, index:listOnglet.count})
                         bar.currentIndex = listOnglet.count-1
                         bar.getTab(bar.currentIndex).children[0].clearListBloc()
-                        gestionSequence.ouvrirXML("aaaaaaares/Sequence/"+nom, bar.currentIndex)
+                        bar.getTab(bar.currentIndex).children[0].gestSequence.ouvrirXML("aaaaaaares/Sequence/"+nom, bar.currentIndex)
 
                     }
                 }

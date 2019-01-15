@@ -2,6 +2,7 @@
 #define GESTIONSEQUENCE_H
 
 #include <QObject>
+#include <QQuickItem>
 #include <QDateTime>
 #include <QList>
 
@@ -9,11 +10,11 @@
 #include "../libXML/tinystr.h"
 #include "../libXML/tinyxml.h"
 
-class GestionSequence : public QObject
+class GestionSequence : public QQuickItem
 {
     Q_OBJECT
 public:
-    GestionSequence(QObject *parent = nullptr);
+    GestionSequence();
 public slots:
     void ajoutAction(EditableAction* act);
 

@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import "../ElementQML"
+import gestionSequence 1.0
 
 Item {
     id: element1
@@ -10,44 +11,12 @@ Item {
     property int xCourant:flickable.contentX
     property int yCourant:flickable.contentY
     property int indiceTab:0
+    property var gestSequence:gestionSequence
 
-    signal newSequence(string nom)
-    Component.onCompleted:
+    GestionSequence
     {
-        listBloc.clear()
-        addBloc(0,100,10100)
+        id:gestionSequence
 
-    }
-
-    Shortcut {
-        sequence: "Ctrl+I"
-        onActivated:
-        {
-            for(var i=0; i<listBloc.count;i++)
-            {
-                if(repeaterBloc.itemAt(i).x % 20 <10)
-                {
-                    repeaterBloc.itemAt(i).x = repeaterBloc.itemAt(i).x - repeaterBloc.itemAt(i).x%20
-                }else
-                {
-                    repeaterBloc.itemAt(i).x = repeaterBloc.itemAt(i).x + 20-(repeaterBloc.itemAt(i).x%20)
-                }
-
-                if(repeaterBloc.itemAt(i).y % 20 <10)
-                {
-                    repeaterBloc.itemAt(i).y = repeaterBloc.itemAt(i).y - repeaterBloc.itemAt(i).y%20
-                }else
-                {
-                    repeaterBloc.itemAt(i).y = repeaterBloc.itemAt(i).y + 20-(repeaterBloc.itemAt(i).y%20)
-                }
-            }
-        }
-    }
-
-
-    Connections
-    {
-        target: gestionSequence
         onOuvrirAction:
         {
             if(element1.indiceTab===indiceTab)
@@ -87,6 +56,41 @@ Item {
             }
         }
     }
+
+    signal newSequence(string nom)
+    Component.onCompleted:
+    {
+        listBloc.clear()
+        addBloc(0,100,10100)
+
+    }
+
+    Shortcut {
+        sequence: "Ctrl+I"
+        onActivated:
+        {
+            for(var i=0; i<listBloc.count;i++)
+            {
+                if(repeaterBloc.itemAt(i).x % 20 <10)
+                {
+                    repeaterBloc.itemAt(i).x = repeaterBloc.itemAt(i).x - repeaterBloc.itemAt(i).x%20
+                }else
+                {
+                    repeaterBloc.itemAt(i).x = repeaterBloc.itemAt(i).x + 20-(repeaterBloc.itemAt(i).x%20)
+                }
+
+                if(repeaterBloc.itemAt(i).y % 20 <10)
+                {
+                    repeaterBloc.itemAt(i).y = repeaterBloc.itemAt(i).y - repeaterBloc.itemAt(i).y%20
+                }else
+                {
+                    repeaterBloc.itemAt(i).y = repeaterBloc.itemAt(i).y + 20-(repeaterBloc.itemAt(i).y%20)
+                }
+            }
+        }
+    }
+
+
     function clearListBloc()
     {
         gestionSequence.clearList()
