@@ -58,6 +58,27 @@ Item {
         anchors.leftMargin: 20
         font.bold: true
         font.pixelSize: 16
+        onCheckedChanged:
+        {
+            if(checked)
+            {
+                listParam.insert(0,{_nom:"timeout",value:"50000", index:0})
+                for(var i=1;i<listParam.count;i++)
+                {
+                    listParam.setProperty(i,"index",listParam.get(i).index+1)
+                }
+            }else
+            {
+                if(listParam.count>0)
+                {
+                    listParam.remove(0,1)
+                    for(var i=0;i<listParam.count;i++)
+                    {
+                        listParam.setProperty(i,"index",listParam.get(i).index-1)
+                    }
+                }
+            }
+        }
     }
 
     Text {
@@ -226,6 +247,20 @@ Item {
             }
             gestAction.saveAction();
             gestTypeAction.update();
+        }
+    }
+
+    Button {
+        id: buttonClear
+        x: 417
+        text: qsTr("Reset action")
+        anchors.right: buttonSaveAction.left
+        anchors.rightMargin: 45
+        anchors.top: parent.top
+        anchors.topMargin: 175
+        onClicked:
+        {
+            listParam.clear()
         }
     }
 }
