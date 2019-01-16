@@ -46,6 +46,7 @@ Item {
 
         onAddTimeOut:
         {
+            repeaterBloc.itemAt(indiceParent).isBlocant = true
             if(element1.indiceTab===indiceTab)
             {
                 repeaterBloc.itemAt(indiceParent).blocTimeout.repaint(repeaterBloc.itemAt(indiceFils).x+2-repeaterBloc.itemAt(indiceParent).x-repeaterBloc.itemAt(indiceParent).blocSortie.x

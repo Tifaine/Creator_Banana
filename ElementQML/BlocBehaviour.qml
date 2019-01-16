@@ -119,7 +119,7 @@ Item {
         Rectangle {
             id: fondEntete
             height: 25
-            color: isBlocant==true?"#3366ff":"transparent"
+            color: isBlocant==true?"#4d0000":"transparent"
             radius: 10
             border.width: 0
             anchors.right: parent.right
@@ -144,7 +144,7 @@ Item {
             Text {
                 id: testNom
                 text: name
-                color:isBlocant==true?"black":"white"
+                color:isBlocant==true?"white":"white"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 font.bold: true

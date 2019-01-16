@@ -27,8 +27,8 @@ Window {
             start: Qt.point(0, 0)
             end: Qt.point(parent.width/2, parent.height)
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#000000" }
-                GradientStop { position: 1.0; color: "#000022" }
+                GradientStop { position: 0.0; color: "#0d0d0d" }
+                GradientStop { position: 1.0; color: "#262626" }
             }
         }
 
@@ -44,8 +44,8 @@ Window {
             start: Qt.point(parent.width/2, 0)
             end: Qt.point(0, parent.height)
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#000000" }
-                GradientStop { position: 1.0; color: "#000022" }
+                GradientStop { position: 0.0; color: "#0d0d0d" }
+                GradientStop { position: 1.0; color: "#262626" }
             }
         }
 

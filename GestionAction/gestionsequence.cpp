@@ -107,6 +107,7 @@ int GestionSequence::ouvrirXML(QString nomFile, int indice)
 
                     }else if(elemNameBis == "timeout")
                     {
+
                         TiXmlAttribute* pAttrib=elemBis->FirstAttribute();
                         std::string s = pAttrib->Value();
                         QString listFils = QString::fromStdString(s);
@@ -151,6 +152,10 @@ void GestionSequence::exportXML(QString nomFile)
         action->SetAttribute("type",listAction.at(i)->getNomAction().toStdString().c_str());
 
         action->SetAttribute("numero", i);
+        if(listAction.at(i)->getIsActionBlocante())
+        {
+            action->SetAttribute("timeout", listAction.at(i)->getValueParam(0).toStdString().c_str());
+        }
 
         TiXmlElement * posBloc = new TiXmlElement( "bloc" );
         action->LinkEndChild( posBloc );
@@ -168,17 +173,18 @@ void GestionSequence::exportXML(QString nomFile)
         TiXmlElement * posFils = new TiXmlElement( "fils" );
         action->LinkEndChild( posFils );
         posFils->SetAttribute("liste", listFils.toStdString().c_str());
-
-        listFils.clear();
-        for(int j=0;j<listAction.at(i)->getNbFilleTimeout();j++)
+        if(listAction.at(i)->getIsActionBlocante())
         {
-            listFils.append(QString::number(listAction.indexOf(listAction.at(i)->getFilleTimeout(j))));
-            listFils.append(";");
+            listFils.clear();
+            for(int j=0;j<listAction.at(i)->getNbFilleTimeout();j++)
+            {
+                listFils.append(QString::number(listAction.indexOf(listAction.at(i)->getFilleTimeout(j))));
+                listFils.append(";");
+            }
+            TiXmlElement * posTimeOut = new TiXmlElement( "timeout" );
+            action->LinkEndChild( posTimeOut );
+            posTimeOut->SetAttribute("liste", listFils.toStdString().c_str());
         }
-        TiXmlElement * posTimeOut = new TiXmlElement( "timeout" );
-        action->LinkEndChild( posTimeOut );
-        posTimeOut->SetAttribute("liste", listFils.toStdString().c_str());
-
         TiXmlElement * param = new TiXmlElement( "parametres" );
         action->LinkEndChild( param );
         for(int j=0;j<listAction.at(i)->getNbParam();j++)
@@ -211,7 +217,6 @@ void GestionSequence::exportVersRobot()
 
     for(int i=0;i<listAction.size();i++)
     {
-
         if(listAction.at(i)->getNomAction().compare("Sequence")==0)
         {
             QString listFils;
@@ -231,6 +236,10 @@ void GestionSequence::exportVersRobot()
             action->SetAttribute("type",listAction.at(i)->getNomAction().toStdString().c_str());
 
             action->SetAttribute("numero", i);
+            if(listAction.at(i)->getIsActionBlocante())
+            {
+                action->SetAttribute("timeout", listAction.at(i)->getValueParam(0).toStdString().c_str());
+            }
 
             TiXmlElement * posBloc = new TiXmlElement( "bloc" );
             action->LinkEndChild( posBloc );
@@ -249,15 +258,20 @@ void GestionSequence::exportVersRobot()
             action->LinkEndChild( posFils );
             posFils->SetAttribute("liste", listFils.toStdString().c_str());
 
-            listFils.clear();
-            for(int j=0;j<listAction.at(i)->getNbFilleTimeout();j++)
+
+            if(listAction.at(i)->getIsActionBlocante())
             {
-                listFils.append(QString::number(listAction.indexOf(listAction.at(i)->getFilleTimeout(j))));
-                listFils.append(";");
+                listFils.clear();
+                for(int j=0;j<listAction.at(i)->getNbFilleTimeout();j++)
+                {
+                    listFils.append(QString::number(listAction.indexOf(listAction.at(i)->getFilleTimeout(j))));
+                    listFils.append(";");
+                }
+                TiXmlElement * posTimeOut = new TiXmlElement( "timeout" );
+                action->LinkEndChild( posTimeOut );
+                posTimeOut->SetAttribute("liste", listFils.toStdString().c_str());
             }
-            TiXmlElement * posTimeOut = new TiXmlElement( "timeout" );
-            action->LinkEndChild( posTimeOut );
-            posTimeOut->SetAttribute("liste", listFils.toStdString().c_str());
+
 
             TiXmlElement * param = new TiXmlElement( "parametres" );
             action->LinkEndChild( param );
@@ -274,7 +288,6 @@ void GestionSequence::exportVersRobot()
 
 void GestionSequence::openSequence(QString nomSequence, int *indiceSequence, QString listFilsParent, TiXmlElement * root, int indiceParent)
 {
-    qDebug()<<nomSequence<<" "<<*indiceSequence<<" "<<listFilsParent;
     QString nomToSend;
     nomToSend.append("res/Sequence/");
     nomToSend.append(nomSequence);
@@ -310,6 +323,10 @@ void GestionSequence::openSequence(QString nomSequence, int *indiceSequence, QSt
             }else
             {
                 action->SetAttribute("numero", i+10000*(localIndiceSequence));
+                if(listActionBis.at(i)->getIsActionBlocante())
+                {
+                    action->SetAttribute("timeout", listActionBis.at(i)->getValueParam(0).toStdString().c_str());
+                }
             }
 
 
@@ -326,7 +343,6 @@ void GestionSequence::openSequence(QString nomSequence, int *indiceSequence, QSt
                 posFils->SetAttribute("liste", listFilsParent.toStdString().c_str());
             }else
             {
-                qDebug()<<"la "<<listActionBis.at(i)->getNbFille();
                 for(int j=0;j<listActionBis.at(i)->getNbFille();j++)
                 {
                     listFils.append(QString::number(listActionBis.indexOf(listActionBis.at(i)->getFille(j))+10000*(localIndiceSequence)));
@@ -337,16 +353,19 @@ void GestionSequence::openSequence(QString nomSequence, int *indiceSequence, QSt
                 posFils->SetAttribute("liste", listFils.toStdString().c_str());
             }
 
-
-            listFils.clear();
-            for(int j=0;j<listActionBis.at(i)->getNbFilleTimeout();j++)
+            if(listActionBis.at(i)->getIsActionBlocante())
             {
-                listFils.append(QString::number(listActionBis.indexOf(listActionBis.at(i)->getFilleTimeout(j))+10000*(localIndiceSequence)));
-                listFils.append(";");
+                listFils.clear();
+                for(int j=0;j<listActionBis.at(i)->getNbFilleTimeout();j++)
+                {
+                    listFils.append(QString::number(listActionBis.indexOf(listActionBis.at(i)->getFilleTimeout(j))+10000*(localIndiceSequence)));
+                    listFils.append(";");
+                }
+                TiXmlElement * posTimeOut = new TiXmlElement( "timeout" );
+                action->LinkEndChild( posTimeOut );
+                posTimeOut->SetAttribute("liste", listFils.toStdString().c_str());
             }
-            TiXmlElement * posTimeOut = new TiXmlElement( "timeout" );
-            action->LinkEndChild( posTimeOut );
-            posTimeOut->SetAttribute("liste", listFils.toStdString().c_str());
+
 
             TiXmlElement * param = new TiXmlElement( "parametres" );
             action->LinkEndChild( param );
@@ -358,9 +377,6 @@ void GestionSequence::openSequence(QString nomSequence, int *indiceSequence, QSt
 
         //listAction.at(i)->saveXML(action,2);
     }
-
-
-    qDebug()<<listActionBis.size();
 }
 
 void GestionSequence::getSequence(QString nomFichier, QList<EditableAction*>* listActionBis)
@@ -434,6 +450,7 @@ void GestionSequence::getSequence(QString nomFichier, QList<EditableAction*>* li
             QString nomAction;
             if(elemName == "Action")
             {
+                listActionBis->at(indiceAction)->setIsActionBlocante(false);
                 TiXmlAttribute* e = elem->FirstAttribute();
                 if(e!=NULL)
                 {
@@ -452,7 +469,6 @@ void GestionSequence::getSequence(QString nomFichier, QList<EditableAction*>* li
                         for(int i=0;i<listFilsSplit.size()-1;i++)
                         {
                             listActionBis->at(indiceAction)->ajoutActionFille(listActionBis->at(listFilsSplit.at(i).toInt()));
-                            qDebug()<<listFilsSplit.at(i).toInt();
                         }
 
 
@@ -462,6 +478,7 @@ void GestionSequence::getSequence(QString nomFichier, QList<EditableAction*>* li
                         std::string s = pAttrib->Value();
                         QString listFils = QString::fromStdString(s);
                         QStringList listFilsSplit = listFils.split(";");
+                        listActionBis->at(indiceAction)->setIsActionBlocante(true);
                         for(int i=0;i<listFilsSplit.size()-1;i++)
                         {
                             listActionBis->at(indiceAction)->ajoutActionFilleTimeOut(listActionBis->at(listFilsSplit.at(i).toInt()));
