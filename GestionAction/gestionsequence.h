@@ -21,13 +21,17 @@ public slots:
     void clearList();
     int ouvrirXML(QString nomFile, int indice);
     void exportXML(QString nomFile);
+    void exportVersRobot();
+
 signals:
     void modifParam(QString nom, QString value, int indiceTab);
     void ouvrirAction(QString nomAction,int xBloc, int yBloc, int indiceTab);
     void addFils(int indiceParent, int indiceFils, int indiceTab);
     void addTimeOut(int indiceParent, int indiceFils, int indiceTab);
 private:
+    void openSequence(QString nomSequence, int* indiceSequence, QString listFilsParent, TiXmlElement * root, int indiceParent);
     QList<EditableAction*> listAction;
+    void getSequence(QString nomFichier, QList<EditableAction *> *listActionBis);
 };
 
 #endif // GESTIONSEQUENCE_H

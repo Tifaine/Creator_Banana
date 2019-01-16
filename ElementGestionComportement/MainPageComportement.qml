@@ -73,6 +73,23 @@ Item {
             fileDialog.open()
         }
     }
+
+    Button
+    {
+        id:buttonExport
+        anchors.top: parent.top
+        anchors.topMargin: 2
+        anchors.right: buttonOpen.left
+        anchors.rightMargin: 20
+        height:20
+        //width:40
+        z:5
+        text:"Export vers robot"
+        onClicked:
+        {
+            bar.getTab(0).children[0].gestSequence.exportVersRobot();
+        }
+    }
     FileDialog {
         id: fileDialog
         title: "Please choose a file"
