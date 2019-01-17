@@ -54,18 +54,12 @@ Item {
             contentWidth: 150; contentHeight: 20000
             contentX: 0
             contentY:0
-
+            flickableDirection: Flickable.VerticalFlick
             ScrollBar.vertical: ScrollBar {
                 parent: flickable.parent
                 anchors.top: flickable.top
                 anchors.left: flickable.right
                 anchors.leftMargin: -10
-                anchors.bottom: flickable.bottom
-            }
-            ScrollBar.horizontal: ScrollBar {
-                parent: flickable.parent
-                anchors.left: flickable.left
-                anchors.right: flickable.right
                 anchors.bottom: flickable.bottom
             }
 
