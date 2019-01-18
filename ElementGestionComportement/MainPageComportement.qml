@@ -143,6 +143,19 @@ Item {
             frame: Rectangle { color: "transparent" }
         }
 
+        Menu
+        {
+            id:contextMenu
+            MenuItem
+            {
+                text:"Supprimer"
+                onTriggered:
+                {
+                    listOnglet.remove(bar.currentIndex,1)
+                }
+            }
+        }
+
         Repeater
         {
             z:-1
@@ -159,11 +172,24 @@ Item {
                     indiceTab:index
                     onNewSequence://
                     {
-                        listOnglet.append({_nom:nom, index:listOnglet.count})
-                        bar.currentIndex = listOnglet.count-1
-                        bar.getTab(bar.currentIndex).children[0].clearListBloc()
-                        bar.getTab(bar.currentIndex).children[0].gestSequence.ouvrirXML("aaaaaaares/Sequence/"+nom, bar.currentIndex)
+                        var findOnglet = false
+                        for(var i=0;i<listOnglet.count;i++)
+                        {
+                            if(listOnglet.get(i)._nom===nom)
+                            {
+                                findOnglet = true
+                                bar.currentIndex = i
+                                break;
 
+                            }
+                        }
+                        if(findOnglet===false)
+                        {
+                            listOnglet.append({_nom:nom, index:listOnglet.count})
+                            bar.currentIndex = listOnglet.count-1
+                            bar.getTab(bar.currentIndex).children[0].clearListBloc()
+                            bar.getTab(bar.currentIndex).children[0].gestSequence.ouvrirXML("aaaaaaares/Sequence/"+nom, bar.currentIndex)
+                        }
                     }
                 }
             }
