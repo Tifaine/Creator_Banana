@@ -9,18 +9,18 @@ void GestionTypeAction::initList()
 {
     listAction.clear();
 
-    listAction.append(new Action);
+    listAction.append(new EditableAction);
     listAction.last()->setNomAction("Depart");
-    listAction.last()->setIsBlocant(false);
+    listAction.last()->setIsActionBlocante(false);
 
-    listAction.append(new Action);
+    listAction.append(new EditableAction);
     listAction.last()->setNomAction("Fin");
-    listAction.last()->setIsBlocant(false);
+    listAction.last()->setIsActionBlocante(false);
 
-    listAction.append(new Action);
+    listAction.append(new EditableAction);
     listAction.last()->setNomAction("Sequence");
-    listAction.last()->setIsBlocant(false);
-    listAction.last()->setNouveauParam("Nom","temp");
+    listAction.last()->setIsActionBlocante(false);
+    listAction.last()->ajoutParametre("Nom","temp");
 }
 
 void GestionTypeAction::update()
@@ -30,7 +30,7 @@ void GestionTypeAction::update()
     QStringList listFiles = dir.entryList(QStringList() << "*.xml",QDir::Files);
     for(int i = 0 ;i<listFiles.size();i++)
     {
-        listAction.append(new Action);
+        listAction.append(new EditableAction);
         QString nomFile;
         nomFile.append("res/bloc/");
         nomFile.append(listFiles.at(i));
@@ -59,21 +59,30 @@ void GestionTypeAction::update()
                     if(elemNameTer=="1")
                     {
 
-                        listAction.last()->setIsBlocant(true);
+                        listAction.last()->setIsActionBlocante(true);
                     }else
                     {
-                        listAction.last()->setIsBlocant(false);
+                        listAction.last()->setIsActionBlocante(false);
                     }
                 }else if(elemName == "Param")
                 {
                     std::string name = elem->Attribute("name");
                     std::string valueDefault = elem->Attribute("valueDefault");
-                    listAction.last()->setNouveauParam(QString::fromStdString(name),QString::fromStdString(valueDefault));
+                    listAction.last()->ajoutParametre(QString::fromStdString(name),QString::fromStdString(valueDefault));
+                    for(TiXmlElement* elemBis = elem->FirstChildElement(); elemBis != NULL; elemBis = elemBis->NextSiblingElement())
+                    {
+                        std::string elemNameBis = elemBis->Value();
+                        if(elemNameBis == "Alias")
+                        {
+                            std::string nameAlias = elemBis->Attribute("name");
+                            std::string valueAlias = elemBis->Attribute("valueAlias");
+                            listAction.last()->ajoutAlias(QString::fromStdString(name),QString::fromStdString(nameAlias),QString::fromStdString(valueAlias));
+                        }
+                    }
                 }
             }
         }
     }
-
     emit finUpdate();
 }
 
@@ -110,10 +119,25 @@ QString GestionTypeAction::getNameParam(int indiceAction, int indiceParam)
 
 QString GestionTypeAction::getValueParam(int indiceAction, int indiceParam)
 {
-    return listAction.at(indiceAction)->getDefaultValueParam(indiceParam);
+    return listAction.at(indiceAction)->getValueParam(indiceParam);
 }
 
 bool GestionTypeAction::getIsBlocant(int indiceAction)
 {
-    return listAction.at(indiceAction)->getIsBlocant();
+    return listAction.at(indiceAction)->getIsActionBlocante();
+}
+
+int GestionTypeAction::getNbAlias(int indiceAction, QString nameParam)
+{
+    return listAction.at(indiceAction)->getNbAlias(nameParam);
+}
+
+QString GestionTypeAction::getNomAlias(int indiceAction, QString nameParam, int indiceAlias)
+{
+    return listAction.at(indiceAction)->getNomAlias(nameParam,indiceAlias);
+}
+
+QString GestionTypeAction::getValueAlias(int indiceAction, QString nameParam, int indiceAlias)
+{
+    return listAction.at(indiceAction)->getValueAlias(nameParam, indiceAlias);
 }

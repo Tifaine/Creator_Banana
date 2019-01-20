@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QList>
 
-#include "action.h"
+#include "editableaction.h"
 
 #include "../libXML/tinyxml.h"
 #include "../libXML/tinystr.h"
@@ -30,8 +30,12 @@ public slots:
     int getIndiceByName(QString name);
     bool getIsBlocant(int indiceAction);
 
+    int getNbAlias(int indiceAction, QString nameParam);
+    QString getNomAlias(int indiceAction, QString nameParam, int indiceAlias);
+    QString getValueAlias(int indiceAction, QString nameParam, int indiceAlias);
+
 private:
-    QList<Action*> listAction;
+    QList<EditableAction*> listAction;
 
     void initList();
 

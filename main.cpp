@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    GestionCreationAction gestAction;
     GestionTypeAction gestTypeAction;
+    GestionCreationAction gestAction(&gestTypeAction);
     //GestionSequence gestSequence;
 
     qmlRegisterType<EditableAction>("editableAction", 1, 0, "EditableAction");

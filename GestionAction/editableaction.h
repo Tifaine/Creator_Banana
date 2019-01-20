@@ -3,11 +3,12 @@
 
 #include <QQuickItem>
 #include <QList>
-
 typedef struct parametreEditable
 {
     QString nomParam;
     QString valueParam;
+    QList<QString>* nomAlias;
+    QList<QString>* valueAlias;
 }parametreEditable;
 
 class EditableAction : public QQuickItem
@@ -37,6 +38,20 @@ public:
     int getNbParam(){return listParam.size();}
     QString getNomParam(int indice){return listParam.at(indice)->nomParam;}
     QString getValueParam(int indice){return listParam.at(indice)->valueParam;}
+    void setNomParam(int indiceParam, QString newNom);
+    void setValueParam(int indiceParam, QString newValue);
+
+    int getNbAlias(QString nameParam);
+
+    void setNomAlias(QString nameParam, int indiceAlias, QString nameAlias);
+    void setValueAlias(QString nameParam, int indiceAlias, QString valueAlias);
+    QString getNomAlias(QString nameParam, int indiceAlias);
+    QString getValueAlias(QString nameParam, int indiceAlias);
+    void clearAlias(QString nameParam);
+    void ajoutAlias(QString nomParam, QString nom, QString value);
+    void clearParam(){listParam.clear();}
+
+
 
 signals:
     void xBlocChanged();
@@ -61,6 +76,7 @@ private:
     QList<EditableAction*> listActionFille;
     QList<EditableAction*> listActionFilleTimeOut;
     QList<parametreEditable*> listParam;
+
 };
 
 #endif // EDITABLEACTION_H

@@ -11,7 +11,7 @@ Item {
     objectName: "BlocBehaviour"
     property bool isBlocant:false
     property string name:"Action"
-    width:name=="Sequence"?300:200
+    width:(name=="Depart"||name=="Fin")?70:300
     property int oldX: 0
     property int oldY: 0
     property var cppBloc:editableAction
@@ -163,7 +163,7 @@ Item {
         {
             id:repeaterParameter
             x: 0
-            y: 200
+            y: 300
             anchors.top: fondEntete.bottom
             anchors.right: parent.right
             anchors.bottom: parent.bottom
@@ -190,7 +190,7 @@ Item {
                     horizontalAlignment: Text.AlignRight
                     font.pixelSize: 16
                     anchors.right: parent.right
-                    anchors.rightMargin: element.name=="Sequence"?2*parent.width/3+1:parent.width/3+1
+                    anchors.rightMargin: 2*parent.width/3
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.top: parent.top
@@ -206,7 +206,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin:2
                     anchors.left: parent.left
-                    anchors.leftMargin: element.name=="Sequence"?1*parent.width/3+5:2*parent.width/3+5
+                    anchors.leftMargin: parent.width/3+5
 
                     anchors.top: parent.top
                     anchors.topMargin:2
