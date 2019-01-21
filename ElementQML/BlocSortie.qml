@@ -38,9 +38,11 @@ Rectangle {
 
     function supprimerFils(fils)
     {
-
+        console.log(listLien.count,repeaterLien.count)
         listLien.remove(rectangleSortie.tabFils.indexOf(fils))
+        //repeaterLien.
         tabFils.splice(rectangleSortie.tabFils.indexOf(fils),1)
+        console.log(listLien.count,repeaterLien.count)
     }
 
 

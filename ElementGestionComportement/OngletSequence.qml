@@ -105,7 +105,14 @@ Item {
         for(var i =0; i<gestTypeAction.getNbParam(indice);i++)
         {
             repeaterBloc.itemAt(listBloc.count-1).addParam(gestTypeAction.getNameParam(indice,i),gestTypeAction.getValueParam(indice,i));
+            for(var j=0;j<gestTypeAction.getNbAlias(indice,gestTypeAction.getNameParam(indice,i));j++)
+            {
+                repeaterBloc.itemAt(listBloc.count-1).cppBloc.ajoutAlias(gestTypeAction.getNameParam(indice,i),
+                                                                         gestTypeAction.getNomAlias(indice,gestTypeAction.getNameParam(indice,i),j),
+                                                                         gestTypeAction.getValueAlias(indice,gestTypeAction.getNameParam(indice,i),j))
+            }
         }
+        repeaterBloc.itemAt(listBloc.count-1).finCreation();
         gestionSequence.ajoutAction(repeaterBloc.itemAt(listBloc.count-1).cppBloc)
     }
 
@@ -150,7 +157,6 @@ Item {
                 anchors.fill: parent
                 color:"transparent"
                 focus:true
-
                 MouseArea
                 {
                     id:mouseArea
@@ -180,6 +186,20 @@ Item {
                                 {
                                     flickable.interactive = false
                                     sortieCourante = obj.childAt(mouse.x-obj.x,mouse.y-obj.y)
+                                }
+                            }
+                        }else if(mouse.button === Qt.RightButton)
+                        {
+                            indice = rect1.areYouThere(mouse.x,mouse.y)
+                            if(indice!=-1)
+                            {
+
+                                obj = repeaterBloc.itemAt(indice)
+                                if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "Entree")
+                                {
+                                    console.log(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).tabPere[0].parent.name);//affichMenu()
+                                    obj.childAt(mouse.x-obj.x,mouse.y-obj.y).affichMenu()
+
                                 }
                             }
                         }

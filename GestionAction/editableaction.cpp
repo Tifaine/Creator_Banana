@@ -153,6 +153,12 @@ void EditableAction::setValueAlias(QString nameParam, int indiceAlias, QString v
     }
 }
 
+void EditableAction::supprimerFils(EditableAction* act)
+{
+    listActionFille.removeOne(act);
+
+}
+
 void EditableAction::ajoutActionFille(EditableAction * act)
 {
     listActionFille.append(act);

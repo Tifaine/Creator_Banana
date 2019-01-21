@@ -41,14 +41,13 @@ public:
     void setNomParam(int indiceParam, QString newNom);
     void setValueParam(int indiceParam, QString newValue);
 
-    int getNbAlias(QString nameParam);
+
 
     void setNomAlias(QString nameParam, int indiceAlias, QString nameAlias);
     void setValueAlias(QString nameParam, int indiceAlias, QString valueAlias);
-    QString getNomAlias(QString nameParam, int indiceAlias);
-    QString getValueAlias(QString nameParam, int indiceAlias);
+
     void clearAlias(QString nameParam);
-    void ajoutAlias(QString nomParam, QString nom, QString value);
+
     void clearParam(){listParam.clear();}
 
 
@@ -63,10 +62,17 @@ signals:
 public slots:
     int getXBloc() const;
     int getYBloc() const;
+
+    int getNbAlias(QString nameParam);
+    QString getNomAlias(QString nameParam, int indiceAlias);
+    QString getValueAlias(QString nameParam, int indiceAlias);
     void modifierValue(QString nomParam, QString nouvelleValue);
     void ajoutParametre(QString nomParam, QString value);
+    void ajoutAlias(QString nomParam, QString nom, QString value);
     void ajoutActionFille(EditableAction * act);
     void ajoutActionFilleTimeOut(EditableAction * act);
+
+    void supprimerFils(EditableAction* act);
 
 private:
     bool isActionBlocante;

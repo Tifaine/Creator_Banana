@@ -21,7 +21,8 @@ Item {
     property var blocTimeout:rectangleTimeout
 
     signal creerSequence(string nom)
-    height:30+listParam.count*35
+    property int taille : 0;
+    height:30+taille*35
     onXChanged:
     {
         //changeX(x-oldX)
@@ -44,7 +45,9 @@ Item {
         oldX = x
         oldY = y
         listParam.clear()
+
     }
+
     function addParam(nom, value)
     {
         listParam.append({_nom:nom,value:value, index:listParam.count})
@@ -61,6 +64,11 @@ Item {
         editableAction.ajoutActionFilleTimeOut(fille.cppBloc)
     }
 
+    function removeActionFille(fille)
+    {
+        editableAction.supprimerFils(fille)
+    }
+
     function modifValueParam(nomParam, valueParam)
     {
         for(var i=0;i<listParam.count;i++)
@@ -69,6 +77,18 @@ Item {
             {
                 listParam.get(i).value = valueParam
             }
+        }
+    }
+
+    function finCreation()
+    {
+
+        for(var i=0;i<listParam.count;i++)
+        {
+            //console.log(listParam.get(i)._nom,cppBloc.getNomAlias())
+            taille++;
+            repeaterParameter.itemAt(i).update()
+            if(cppBloc.getNbAlias(listParam.get(i)._nom)>0)taille++;
         }
     }
 
@@ -84,6 +104,7 @@ Item {
 
     MouseArea
     {
+
         id:mouseArea3
         anchors.fill: parent
         anchors.leftMargin: 25
@@ -180,8 +201,8 @@ Item {
                 anchors.rightMargin: 0
                 anchors.left: repeaterParameter.left
                 anchors.leftMargin: 0
-                anchors.top: repeaterParameter.top
-                anchors.topMargin:35*index
+                anchors.top: index>0?repeaterParameter.itemAt(index-1).bottom:repeaterParameter.top
+                anchors.topMargin:0
                 Text {
                     id: textFieldNomParam
                     text: _nom
@@ -198,19 +219,20 @@ Item {
                     anchors.bottom: parent.bottom
                 }
 
+
+
                 TextField {
                     id: textFieldDefaultValue
                     text: value
-                    height:35
+                    height:33
                     font.pixelSize: 16
                     anchors.right: parent.right
-                    anchors.rightMargin:2
+                    anchors.rightMargin:5
                     anchors.left: parent.left
                     anchors.leftMargin: parent.width/3+5
 
-                    anchors.top: parent.top
+                    anchors.top: comboBox.bottom
                     anchors.topMargin:2
-                    anchors.bottom: parent.bottom
                     color: "white"
                     background: Rectangle {
                         color:"#22ffffff"
@@ -223,6 +245,73 @@ Item {
                     onTextChanged:
                     {
                         editableAction.modifierValue(_nom,text)
+                    }
+                }
+
+                ListModel
+                {
+                    id:listAlias
+                    ListElement{ text:"x" ; valueAlias:"0" ; index : 0}
+                }
+
+                ComboBox {
+                    id: comboBox
+                    height:35
+                    anchors.right: parent.right
+                    anchors.rightMargin:2
+                    anchors.left: parent.left
+                    anchors.leftMargin: parent.width/3+5
+                    anchors.top: parent.top
+                    anchors.topMargin:2
+                    visible:false
+                    model: ListModel {
+                               id: model
+
+                           }
+                    background: Rectangle {
+                        color:"#22ffffff"
+                        radius: 10
+                        implicitWidth: 100
+                        implicitHeight: 24
+                        border.color: "#333"
+                        border.width: 1
+                    }
+                    contentItem: Text {
+                          color : "#ffffff"
+                          text: parent.displayText
+                          font.family: "Arial";
+                          font.pixelSize: 16;
+                          verticalAlignment: Text.AlignVCenter;
+                          horizontalAlignment: Text.AlignLeft;
+
+                      }
+                    onCurrentIndexChanged:
+                    {
+                        textFieldDefaultValue.text = cppBloc.getValueAlias(_nom,currentIndex)
+                    }
+                }
+
+                function update()
+                {
+                    if(cppBloc.getNbAlias(_nom)>0)
+                    {
+                        comboBox.height = 35
+                        comboBox.visible = true
+                        rect.height = 70
+                        comboBox.model.clear()
+
+
+                        for(var i=0;i<cppBloc.getNbAlias(_nom);i++)
+                        {
+                            comboBox.model.append({text: "  "+cppBloc.getNomAlias(_nom,i)+" ("+cppBloc.getValueAlias(_nom,i)+")"})
+                        }
+                    }else
+                    {
+                        comboBox.height = 0
+                        comboBox.visible = false
+                        rect.height = 35
+                        comboBox.model.clear()
+
                     }
                 }
             }
@@ -247,6 +336,8 @@ Item {
         anchors.topMargin: 10
         visible:element.name=="Depart"?false:true
         enabled:element.name=="Depart"?false:true
+        papa:cppBloc
+        myself:rectangleEntree
     }
 
     BlocSortie {
@@ -274,6 +365,7 @@ Item {
         anchors.leftMargin: -5
         anchors.top: parent.top
         anchors.topMargin: 20
+
 
     }
 }
