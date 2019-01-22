@@ -547,14 +547,6 @@ Item {
         anchors.topMargin: 15
         onClicked:
         {
-            /*gestAction.setNomAction(textFieldNomAction.text)
-            //gestAction.setCategorieAction()
-            gestAction.setIsActionBlocante(radioButtonBlocant.checked)
-            for(var i = 0;i<listParam.count;i++)
-            {
-                gestAction.setNouveauParam(repeaterParameter.itemAt(i).children[0].text,repeaterParameter.itemAt(i).children[1].text)
-            }*/
-            console.log("coucou")
             gestAction.saveAction();
             gestTypeAction.update();
         }

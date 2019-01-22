@@ -197,7 +197,6 @@ Item {
                                 obj = repeaterBloc.itemAt(indice)
                                 if(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).objectName === "Entree")
                                 {
-                                    console.log(obj.childAt(mouse.x-obj.x,mouse.y-obj.y).tabPere[0].parent.name);//affichMenu()
                                     obj.childAt(mouse.x-obj.x,mouse.y-obj.y).affichMenu()
 
                                 }

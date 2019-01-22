@@ -57,7 +57,6 @@ Rectangle {
                 text:_nom
                 onClicked:
                 {
-                    console.log(papa,myself)
                     tabPere[index].parent.removeActionFille(papa)
                     tabPere[index].supprimerFils(myself)
                     tabPere.splice(index,1)

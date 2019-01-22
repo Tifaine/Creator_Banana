@@ -85,7 +85,6 @@ Item {
 
         for(var i=0;i<listParam.count;i++)
         {
-            //console.log(listParam.get(i)._nom,cppBloc.getNomAlias())
             taille++;
             repeaterParameter.itemAt(i).update()
             if(cppBloc.getNbAlias(listParam.get(i)._nom)>0)taille++;
