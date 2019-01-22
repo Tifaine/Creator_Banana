@@ -36,6 +36,14 @@ Rectangle {
         }
     }
 
+    function killMePlease(myself)
+    {
+        for(var i=0;i<tabFils.length;i++)
+        {
+            tabFils[i].deleteFather(myself)
+        }
+    }
+
     function supprimerFils(fils)
     {
         listLien.remove(rectangleSortie.tabFils.indexOf(fils))

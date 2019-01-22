@@ -15,6 +15,11 @@ void GestionSequence::clearList()
     listAction.clear();
 }
 
+void GestionSequence::supprimerBloc(int index)
+{
+    listAction.removeAt(index);
+}
+
 int GestionSequence::ouvrirXML(QString nomFile, int indice)
 {
     nomFile=nomFile.right(nomFile.size()-7);

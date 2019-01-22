@@ -13,6 +13,7 @@ Rectangle {
     property var papa:null
     property var myself:null
 
+
     Component.onCompleted: listMenu.clear()
 
     property var tabPere:[]
@@ -42,6 +43,22 @@ Rectangle {
         menu.open()
     }
 
+    function deleteFather(father)
+    {
+        tabPere[tabPere.indexOf(father)].parent.removeActionFille(papa)
+        tabPere[tabPere.indexOf(father)].supprimerFils(myself)
+        tabPere.splice(tabPere.indexOf(father),1)
+    }
+
+    function killMePlase()
+    {
+        for(var i=0;i<tabPere.length;i++)
+        {
+            tabPere[i].parent.removeActionFille(papa)
+            tabPere[i].supprimerFils(myself)
+        }
+    }
+
     ListModel
     {
         id:listMenu
@@ -61,11 +78,8 @@ Rectangle {
                     tabPere[index].supprimerFils(myself)
                     tabPere.splice(index,1)
                 }
-
             }
         }
-
-
     }
 }
 

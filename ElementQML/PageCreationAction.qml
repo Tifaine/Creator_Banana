@@ -725,7 +725,7 @@ Item {
                 }
                 onTextChanged:
                 {
-                    if(gestAction.getNbAlias(listParam1.get(rectangle6.behaviorSelected)._nom) >0 )
+                    if(rectangle6.behaviorSelected > -1 )
                     {
                         gestAction.setNomAlias(listParam1.get(rectangle6.behaviorSelected)._nom,index,text)
                     }
@@ -754,7 +754,7 @@ Item {
                 }
                 onTextChanged:
                 {
-                    if(gestAction.getNbAlias(listParam1.get(rectangle6.behaviorSelected)._nom) >0 )
+                    if(rectangle6.behaviorSelected > -1 )
                     {
                         gestAction.setValueAlias(listParam1.get(rectangle6.behaviorSelected)._nom,index,text)
                     }

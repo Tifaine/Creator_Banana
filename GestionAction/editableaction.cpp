@@ -155,7 +155,7 @@ void EditableAction::setValueAlias(QString nameParam, int indiceAlias, QString v
 
 void EditableAction::supprimerFils(EditableAction* act)
 {
-    listActionFille.removeOne(act);
+    listActionFille.removeAt(listActionFille.indexOf(act));
 
 }
 

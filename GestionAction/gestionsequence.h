@@ -22,6 +22,7 @@ public slots:
     int ouvrirXML(QString nomFile, int indice);
     void exportXML(QString nomFile);
     void exportVersRobot();
+    void supprimerBloc(int index);
 
 signals:
     void modifParam(QString nom, QString value, int indiceTab);

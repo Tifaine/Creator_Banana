@@ -21,6 +21,7 @@ Item {
     property var blocTimeout:rectangleTimeout
 
     signal creerSequence(string nom)
+    signal killMe()
     property int taille : 0;
     height:30+taille*35
     onXChanged:
@@ -100,6 +101,20 @@ Item {
         isActionBlocante: isBlocant
     }
 
+    Menu {
+        id: menu
+        MenuItem {
+            text:"Supprimer"
+            onClicked:
+            {
+                rectangleEntree.killMePlase()
+                rectangleSortie.killMePlease(rectangleSortie)
+                rectangleTimeout.killMePlease(rectangleTimeout)
+                killMe();
+            }
+        }
+    }
+
 
     MouseArea
     {
@@ -115,13 +130,16 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked:
         {
+            if(mouse.button === Qt.RightButton)
+            {
+                menu.open()
+            }
         }
         onDoubleClicked:
         {
 
             if(element.name==="Sequence")
             {
-
                 creerSequence(repeaterParameter.itemAt(0).children[1].text)
             }
         }
@@ -264,9 +282,9 @@ Item {
                     anchors.topMargin:2
                     visible:false
                     model: ListModel {
-                               id: model
+                        id: model
 
-                           }
+                    }
                     background: Rectangle {
                         color:"#22ffffff"
                         radius: 10
@@ -276,14 +294,14 @@ Item {
                         border.width: 1
                     }
                     contentItem: Text {
-                          color : "#ffffff"
-                          text: parent.displayText
-                          font.family: "Arial";
-                          font.pixelSize: 16;
-                          verticalAlignment: Text.AlignVCenter;
-                          horizontalAlignment: Text.AlignLeft;
+                        color : "#ffffff"
+                        text: parent.displayText
+                        font.family: "Arial";
+                        font.pixelSize: 16;
+                        verticalAlignment: Text.AlignVCenter;
+                        horizontalAlignment: Text.AlignLeft;
 
-                      }
+                    }
                     onCurrentIndexChanged:
                     {
                         textFieldDefaultValue.text = cppBloc.getValueAlias(_nom,currentIndex)

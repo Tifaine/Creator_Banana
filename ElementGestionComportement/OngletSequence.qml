@@ -289,11 +289,21 @@ Item {
                         x:_x
                         y:_y
                         name:_nom
+                        onKillMe:
+                        {
+                            parent.killkillkill(index)
+                        }
                         onCreerSequence:
                         {
                             newSequence(nom)
                         }
                     }
+                }
+
+                function killkillkill(index)
+                {
+                    listBloc.remove(index,1)
+                    element1.gestSequence.supprimerBloc(index)
                 }
 
                 function areYouThere(mouseX, mouseY)
