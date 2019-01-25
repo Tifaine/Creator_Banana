@@ -72,7 +72,7 @@ Item {
             function updateColor(indice)
             {
 
-                listComportement.setProperty(indice,"_color","#4d0000");
+                listComportement.setProperty(indice,"_color","#010423");
                 if(behaviorSelected !== -1)
                 {
                     listComportement.setProperty(behaviorSelected,"_color","#00ffffff");
@@ -205,7 +205,7 @@ Item {
             function updateColor(indice)
             {
 
-                listParam1.setProperty(indice,"_color","#4d0000");
+                listParam1.setProperty(indice,"_color","#010423");
                 if(behaviorSelected !== -1)
                 {
                     listParam1.setProperty(behaviorSelected,"_color","#00ffffff");
