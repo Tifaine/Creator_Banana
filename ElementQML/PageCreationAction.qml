@@ -44,6 +44,7 @@ Item {
 
     Flickable
     {
+        clip:true
         id: flickable
         height: 100
         flickableDirection: Flickable.HorizontalFlick
@@ -177,23 +178,21 @@ Item {
     Flickable
     {
         id: flickableListParam
-
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        anchors.right: rectangle2.left
+        height: 50
+        clip:true
+        anchors.right: parent.right
         anchors.rightMargin: 5
         anchors.left: rectangle.right
         anchors.leftMargin: 5
         anchors.top: textListParam.bottom
-        anchors.topMargin: 15
-        contentWidth: parent.width; contentHeight: 2000
-        flickableDirection: Flickable.VerticalFlick
-        ScrollBar.vertical: ScrollBar {
-            parent: flickableListParam.parent
-            anchors.top: flickableListParam.top
-            anchors.left: flickableListParam.right
-            anchors.leftMargin: -10
-            anchors.bottom: flickableListParam.bottom
+        anchors.topMargin: 5
+        contentWidth: 5000; contentHeight: height
+        flickableDirection: Flickable.HorizontalFlick
+        ScrollBar.horizontal: ScrollBar {
+            parent: flickable.parent
+            anchors.left: flickable.left
+            anchors.right: flickable.right
+            anchors.bottom: flickable.bottom
         }
 
         Rectangle
@@ -230,9 +229,9 @@ Item {
                     border.color: "#ffffff"
                     border.width: 1
                     anchors.left: repeaterListParam.left
-                    anchors.leftMargin: (index%2)==1?105:5
+                    anchors.leftMargin: 95*index
                     anchors.top: repeaterListParam.top
-                    anchors.topMargin:(index%2)==1?(index==1?0:(Math.floor(index/2))*50)+5:((index/2)*50)+5
+                    anchors.topMargin:5
 
                     Rectangle
                     {
@@ -279,18 +278,26 @@ Item {
         }
     }
 
+    ListModel
+    {
+        id:listAlias
+        ListElement{ _nom:"x" ; value:"0" ; index : 0}
+        ListElement{ _nom:"y" ; value:"0" ; index : 1}
+    }
+
     Flickable
     {
         id: flickableAlias
+        clip:true
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         anchors.right: parent.right
         anchors.rightMargin: 5
-        anchors.left: rectangle2.right
+        anchors.left: rectangle.right
         anchors.leftMargin: 5
         anchors.top: textAlias.bottom
-        anchors.topMargin: 15
-        contentWidth: parent.width; contentHeight: 2000
+        anchors.topMargin: 10
+        contentWidth: width; contentHeight: 2000
         flickableDirection: Flickable.VerticalFlick
         ScrollBar.vertical: ScrollBar {
             parent: flickableAlias.parent
@@ -298,6 +305,84 @@ Item {
             anchors.left: flickableAlias.right
             anchors.leftMargin: -10
             anchors.bottom: flickableAlias.bottom
+        }
+
+        Repeater
+        {
+            id:repeaterAlias
+            model:listAlias
+            anchors.bottom: parent.bottom
+            anchors.fill: parent
+            Rectangle
+            {
+                Component.onCompleted: console.log(flickableAlias.contentWidth,width)
+                id:rect10
+                height:50
+                color:"transparent"
+                anchors.right: repeaterAlias.right
+                anchors.rightMargin: 0
+                anchors.left: repeaterAlias.left
+                anchors.leftMargin: 0
+                anchors.top: repeaterAlias.top
+                anchors.topMargin:50*index
+                TextField {
+                    id: textFieldNomAlias
+                    text: _nom
+                    font.pixelSize: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: parent.width/2+1
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: parent.top
+                    anchors.topMargin:2
+                    anchors.bottom: parent.bottom
+                    color: "white"
+                    background: Rectangle {
+                        color:"#22ffffff"
+                        radius: 10
+                        implicitWidth: 100
+                        implicitHeight: 24
+                        border.color: "#333"
+                        border.width: 1
+                    }
+                    onTextChanged:
+                    {
+                        if(rectangle6.behaviorSelected > -1 )
+                        {
+                            gestAction.setNomAlias(listParam1.get(rectangle6.behaviorSelected)._nom,index,text)
+                        }
+                    }
+                }
+                TextField {
+                    id: textFieldAliasValue
+                    text: value
+                    height:50
+                    font.pixelSize: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin:2
+                    anchors.left: parent.left
+                    anchors.leftMargin:  parent.width/2+1
+                    anchors.top: parent.top
+                    anchors.topMargin:2
+                    anchors.bottom: parent.bottom
+                    color: "white"
+                    background: Rectangle {
+                        color:"#22ffffff"
+                        radius: 10
+                        implicitWidth: 100
+                        implicitHeight: 24
+                        border.color: "#333"
+                        border.width: 1
+                    }
+                    onTextChanged:
+                    {
+                        if(rectangle6.behaviorSelected > -1 )
+                        {
+                            gestAction.setValueAlias(listParam1.get(rectangle6.behaviorSelected)._nom,index,text)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -583,8 +668,6 @@ Item {
         color: "#ffffff"
         text: qsTr("Liste paramètres")
         horizontalAlignment: Text.AlignHCenter
-        anchors.rightMargin: 5
-        anchors.right: rectangle2.left
         font.bold: true
         anchors.left: rectangle.right
         anchors.leftMargin: 5
@@ -600,10 +683,10 @@ Item {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         anchors.right: parent.right
-        anchors.rightMargin: parent.width/6
-        anchors.left: rectangle2.right
+        anchors.rightMargin: parent.width/4
+        anchors.left: rectangle.right
         anchors.leftMargin: 5
-        anchors.top: buttonAjoutAlias.bottom
+        anchors.top: rectangle2.bottom
         anchors.topMargin: 10
         font.pixelSize: 16
     }
@@ -618,8 +701,8 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 5
         anchors.left: parent.left
-        anchors.leftMargin: parent.width*5/6
-        anchors.top: buttonAjoutAlias.bottom
+        anchors.leftMargin: parent.width*3/4
+        anchors.top: rectangle2.bottom
         anchors.topMargin: 10
         font.pixelSize: 16
     }
@@ -627,44 +710,40 @@ Item {
     Rectangle {
         id: rectangle2
         x: 784
-        width: 1
+        height: 1
         color: "#ffffff"
-        anchors.leftMargin: 210
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        anchors.leftMargin: 5
         anchors.left: rectangle.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 15
-        anchors.top: buttonSaveAction.bottom
-        anchors.topMargin: 25
+        anchors.top: flickableListParam.bottom
+        anchors.topMargin: 5
     }
 
 
 
     Button {
         id: buttonAjoutAlias
-        x: 989
         text: qsTr("Ajouter Alias")
-        anchors.rightMargin: 311
-        anchors.right: parent.right
-        anchors.top: buttonClear.bottom
-        anchors.topMargin: 20
+        anchors.left: buttonSaveAction.right
+        anchors.leftMargin: 45
+        anchors.top: rectangle1.bottom
+        anchors.topMargin: 15
         onClicked:
         {
             gestAction.ajoutNouveauAlias(listParam1.get(rectangle6.behaviorSelected)._nom,"Alias_"+listAlias.count,"0");
             listAlias.append({_nom:"Alias_"+listAlias.count,value:"0", index:listAlias.count})
-
-
         }
     }
 
     Button {
         id: buttonSuppAlias
-        x: 1234
         y: -8
         text: qsTr("Clear Alias")
-        anchors.rightMargin: 67
-        anchors.topMargin: 20
-        anchors.right: parent.right
-        anchors.top: buttonClear.bottom
+        anchors.left: buttonAjoutAlias.right
+        anchors.leftMargin: 45
+        anchors.topMargin: 15
+        anchors.top: rectangle1.bottom
         onClicked:
         {
             listAlias.clear()
@@ -673,95 +752,7 @@ Item {
     }
 
 
-    ListModel
-    {
-        id:listAlias
-        ListElement{ _nom:"x" ; value:"0" ; index : 0}
-        ListElement{ _nom:"y" ; value:"0" ; index : 1}
-    }
 
-    Repeater
-    {
-        id:repeaterAlias
-        model:listAlias
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
-        anchors.top: textAlias.bottom
-        anchors.topMargin: 5
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        anchors.left: rectangle2.right
-        anchors.leftMargin: 5
-        Rectangle
-        {
-            id:rect10
-            height:50
-            color:"transparent"
-            anchors.right: repeaterAlias.right
-            anchors.rightMargin: 0
-            anchors.left: repeaterAlias.left
-            anchors.leftMargin: 0
-            anchors.top: repeaterAlias.top
-            anchors.topMargin:50*index
-            TextField {
-                id: textFieldNomAlias
-                text: _nom
-                font.pixelSize: 16
-                anchors.right: parent.right
-                anchors.rightMargin: parent.width/2+1
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin:2
-                anchors.bottom: parent.bottom
-                color: "white"
-                background: Rectangle {
-                    color:"#22ffffff"
-                    radius: 10
-                    implicitWidth: 100
-                    implicitHeight: 24
-                    border.color: "#333"
-                    border.width: 1
-                }
-                onTextChanged:
-                {
-                    if(rectangle6.behaviorSelected > -1 )
-                    {
-                        gestAction.setNomAlias(listParam1.get(rectangle6.behaviorSelected)._nom,index,text)
-                    }
-                }
-            }
-            TextField {
-                id: textFieldAliasValue
-                text: value
-                height:50
-                font.pixelSize: 16
-                anchors.right: parent.right
-                anchors.rightMargin:2
-                anchors.left: parent.left
-                anchors.leftMargin:  parent.width/2+1
-                anchors.top: parent.top
-                anchors.topMargin:2
-                anchors.bottom: parent.bottom
-                color: "white"
-                background: Rectangle {
-                    color:"#22ffffff"
-                    radius: 10
-                    implicitWidth: 100
-                    implicitHeight: 24
-                    border.color: "#333"
-                    border.width: 1
-                }
-                onTextChanged:
-                {
-                    if(rectangle6.behaviorSelected > -1 )
-                    {
-                        gestAction.setValueAlias(listParam1.get(rectangle6.behaviorSelected)._nom,index,text)
-                    }
-                }
-            }
-        }
-    }
 }
 
 
