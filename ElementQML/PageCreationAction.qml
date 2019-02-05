@@ -135,11 +135,12 @@ Item {
                             onClicked:
                             {
                                 rectangle5.updateColor(index)
-
                                 textFieldNomAction.text = gestTypeAction.getNomAction(index)
                                 radioButtonBlocant.checked = gestTypeAction.getIsBlocant(index)
                                 listParam.clear();
                                 listParam1.clear();
+                                listAlias.clear();
+                                rectangle6.behaviorSelected=-1
                                 gestAction.clearParam()
                                 for(var i =0; i<gestTypeAction.getNbParam(index);i++)
                                 {
@@ -153,10 +154,8 @@ Item {
                                         gestAction.ajoutNouveauAlias(gestTypeAction.getNameParam(index,i),gestTypeAction.getNomAlias(index,gestTypeAction.getNameParam(index,i),j),gestTypeAction.getValueAlias(index,gestTypeAction.getNameParam(index,i),j))
                                     }
                                 }
-
                                 gestAction.setNomAction(gestTypeAction.getNomAction(index))
                                 gestAction.setIsActionBlocante(gestTypeAction.getIsBlocant(index))
-
                             }
                         }
                     }
@@ -171,8 +170,6 @@ Item {
     {
         id:listParam1
         ListElement{ _nom:"Deplacement" ; index : 0; _color:"#00ffffff"}
-        ListElement{ _nom:"test" ; index : 1; _color:"#00ffffff"}
-        ListElement{ _nom:"aaa" ; index : 2; _color:"#00ffffff"}
     }
 
     Flickable
@@ -189,10 +186,10 @@ Item {
         contentWidth: 5000; contentHeight: height
         flickableDirection: Flickable.HorizontalFlick
         ScrollBar.horizontal: ScrollBar {
-            parent: flickable.parent
-            anchors.left: flickable.left
-            anchors.right: flickable.right
-            anchors.bottom: flickable.bottom
+            parent: flickableListParam.parent
+            anchors.left: flickableListParam.left
+            anchors.right: flickableListParam.right
+            anchors.bottom: flickableListParam.bottom
         }
 
         Rectangle
@@ -203,7 +200,6 @@ Item {
 
             function updateColor(indice)
             {
-
                 listParam1.setProperty(indice,"_color","#010423");
                 if(behaviorSelected !== -1)
                 {
@@ -315,7 +311,6 @@ Item {
             anchors.fill: parent
             Rectangle
             {
-                Component.onCompleted: console.log(flickableAlias.contentWidth,width)
                 id:rect10
                 height:50
                 color:"transparent"
@@ -426,9 +421,12 @@ Item {
         font.pixelSize: 16
         onCheckedChanged:
         {
+            gestAction.setIsActionBlocante(checked)
+
             if(checked)
             {
                 listParam.insert(0,{_nom:"timeout",value:"50000", index:0})
+                gestAction.setNouveauParam("timeout","50000");
                 for(var i=1;i<listParam.count;i++)
                 {
                     listParam.setProperty(i,"index",listParam.get(i).index+1)
@@ -634,6 +632,7 @@ Item {
         {
             gestAction.saveAction();
             gestTypeAction.update();
+            rectangle5.behaviorSelected=-1
         }
     }
 
@@ -648,6 +647,13 @@ Item {
         {
             listParam.clear()
             gestAction.clearParam()
+            listAlias.clear()
+            radioButtonBlocant.checked = false
+
+            gestAction.clearAlias(listParam1.get(rectangle6.behaviorSelected)._nom)
+            listParam1.clear()
+            rectangle6.behaviorSelected = -1;
+
         }
     }
 

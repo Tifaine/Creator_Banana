@@ -11,7 +11,6 @@ void GestionCreationAction::saveAction()
     nomFile.append("res/bloc/");
     nomFile.append(editAction.getNomAction());
     nomFile.append(".xml");
-    qDebug()<<nomFile<<" coucou";
     TiXmlDocument doc;
     TiXmlElement* msg;
     TiXmlElement* msg2;
